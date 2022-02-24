@@ -29,7 +29,7 @@ func TestClientForm(t *testing.T) {
 	assertNil(t, err)
 	assertNotNil(t, request)
 
-	client := NewClient("abc", "def")
+	client := NewClient("abc", "def", &Configure{})
 
 	data := &PostData{Name: "yunxin", Accid: "123"}
 	err = client.AddFormBody(request, data)

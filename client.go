@@ -1,6 +1,7 @@
 package yunxin
 
 import (
+	"context"
 	"crypto/sha1"
 	"encoding/hex"
 	"io"
@@ -18,13 +19,17 @@ type Client struct {
 	appKey      string
 	appSecret   string
 	FormEncoder *schema.Encoder
+	HTTPClient  *http.Client
+	*Configure
 }
 
-func NewClient(appKey, appSecert string) *Client {
+func NewClient(appKey, appSecert string, cfg *Configure) *Client {
 	return &Client{
 		appKey:      appKey,
 		appSecret:   appSecert,
 		FormEncoder: schema.NewEncoder(),
+		Configure:   cfg,
+		HTTPClient:  http.DefaultClient,
 	}
 }
 
@@ -51,4 +56,44 @@ func (c *Client) AddFormBody(r *http.Request, v interface{}) error {
 	r.Body = io.NopCloser(strings.NewReader(form.Encode()))
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
 	return nil
+}
+
+func (c *Client) URL(path string) string {
+	if c.Host == "" {
+		return DefaultHost + path
+	}
+	return c.Host + path
+}
+
+func (c *Client) Post(path string, body io.Reader) (*http.Response, error) {
+	r, err := http.NewRequest("POST", c.URL(path), body)
+	if err != nil {
+		return nil, err
+	}
+	return c.do(r)
+}
+
+func (c *Client) PostForm(path string, value interface{}) (*http.Response, error) {
+	r, err := http.NewRequest("POST", c.URL(path), nil)
+	if err != nil {
+		return nil, err
+	}
+	err = c.AddFormBody(r, value)
+	if err != nil {
+		return nil, err
+	}
+	return c.do(r)
+}
+
+func (c *Client) do(r *http.Request) (*http.Response, error) {
+	c.AddCheckSum(r)
+	ctx := r.Context()
+	// add timeout ? TODO: check HTTPClient.Timeout
+	if c.Timeout > 0 {
+		ctx, cancel := context.WithTimeout(ctx, c.Timeout)
+		defer cancel()
+		r = r.WithContext(ctx)
+	}
+
+	return c.HTTPClient.Do(r)
 }
