@@ -110,7 +110,11 @@ func (c *Client) PostFormAs(path string, value interface{}, outPtr Response) err
 		return err
 	}
 	defer resp.Body.Close()
-	raw, _ := ioutil.ReadAll(resp.Body)
+	raw, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
 	outPtr.SetRawBody(raw)
 	err = json.Unmarshal(raw, &outPtr)
 	if err != nil {
