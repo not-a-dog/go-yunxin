@@ -15,5 +15,5 @@ type CreateUserParam struct {
 }
 
 type CreateUserResponse struct {
-	Code int ``
+	BasicResponese
 }

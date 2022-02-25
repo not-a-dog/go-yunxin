@@ -4,7 +4,9 @@ import (
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
+	"encoding/json"
 	"io"
+	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -96,4 +98,23 @@ func (c *Client) do(r *http.Request) (*http.Response, error) {
 	}
 
 	return c.HTTPClient.Do(r)
+}
+
+type Response interface {
+	SetRawBody(raw []byte)
+}
+
+func (c *Client) PostFormAs(path string, value interface{}, outPtr Response) error {
+	resp, err := c.PostForm(PathCreateUser, value)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	raw, err := ioutil.ReadAll(resp.Body)
+	outPtr.SetRawBody(raw)
+	err = json.Unmarshal(raw, &outPtr)
+	if err != nil {
+		return err
+	}
+	return nil
 }
