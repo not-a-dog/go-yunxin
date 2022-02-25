@@ -16,4 +16,11 @@ type CreateUserParam struct {
 
 type CreateUserResponse struct {
 	BasicResponese
+	Info *CreateUserInfo
+}
+
+type CreateUserInfo struct {
+	Accid string `json:"accid"`
+	Token string `json:"token"`
+	Name  string `json:"name"`
 }
