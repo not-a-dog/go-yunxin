@@ -8,7 +8,8 @@ const (
 	PathUserUnBlock      = `/user/unblock.action`
 	PathUpdateUserInfo   = `/user/updateUinfo.action`
 	PathGetUserInfos     = `/user/getUinfos.action`
-	PathSetDonnopUser    = `/user/setDonnop.action`
+	PathUserSetDonnop    = `/user/setDonnop.action`
+	PathUserMute         = `/user/mute.action`
 )
 
 type CreateUserParam struct {
@@ -71,29 +72,29 @@ type RefreshTokenInfo struct {
 	Token string `json:"token"`
 }
 
-type BlockUserParam struct {
+type UserBlockParam struct {
 	Accid         string `schema:"accid,required"`
 	Needkick      bool   `schema:"needkick"`
 	KickNotifyExt string `schema:"kickNotifyExt"`
 }
 
-func (BlockUserParam) GetPath() string {
+func (UserBlockParam) GetPath() string {
 	return PathUserBlock
 }
 
-type BlockUserResponse struct {
+type UserBlockResponse struct {
 	BasicResponese
 }
 
-type UnBlockUserParam struct {
+type UserUnBlockParam struct {
 	Accid string `schema:"accid,required"`
 }
 
-func (UnBlockUserParam) GetPath() string {
+func (UserUnBlockParam) GetPath() string {
 	return PathUserUnBlock
 }
 
-type UnBlockUserResponse struct {
+type UserUnBlockResponse struct {
 	BasicResponese
 }
 
@@ -143,4 +144,30 @@ type UserInfo struct {
 	Gender int    `json:"gender"`
 	Valid  bool   `json:"valid"`
 	Mute   bool   `json:"mute"`
+}
+
+type UserSetDonnopParam struct {
+	Accid      string `schema:"accid,required"`
+	DonnopOpen bool   `schema:"donnopOpen,required"`
+}
+
+func (UserSetDonnopParam) GetPath() string {
+	return PathUserSetDonnop
+}
+
+type UserSetDonnopResponse struct {
+	BasicResponese
+}
+
+type UserMuteParam struct {
+	Accid string `schema:"accid,required"`
+	Mute  bool   `schema:"mute,required"`
+}
+
+func (UserMuteParam) GetPath() string {
+	return PathUserMute
+}
+
+type UserMuteResponse struct {
+	BasicResponese
 }

@@ -45,12 +45,12 @@ func TestIMReferToken(t *testing.T) {
 
 func TestBlockAndUnBlockUser(t *testing.T) {
 	im := &IM{Client: newTestClient(t)}
-	resp, err := im.BlockUser(&BlockUserParam{Accid: testAccID})
+	resp, err := im.UserBlock(&UserBlockParam{Accid: testAccID})
 	assertNil(t, err)
 	assertNotNil(t, resp)
 	assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
 
-	resp2, err := im.UnBlockUser(&UnBlockUserParam{Accid: testAccID})
+	resp2, err := im.UserUnBlock(&UserUnBlockParam{Accid: testAccID})
 	assertNil(t, err)
 	assertNotNil(t, resp2)
 	assert(t, resp2.IsSuccess(), resp2.RawBody, testAccID)
@@ -89,4 +89,26 @@ func TestGetUserInfos(t *testing.T) {
 	assertNotNil(t, resp)
 	assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
 	assert(t, len(resp.Uinfos) == 1, resp.RawBody)
+}
+
+func TestUserSetDonnop(t *testing.T) {
+	im := &IM{Client: newTestClient(t)}
+	resp, err := im.UserSetDonnop(&UserSetDonnopParam{
+		Accid:      testAccID,
+		DonnopOpen: false,
+	})
+	assertNil(t, err)
+	assertNotNil(t, resp)
+	// assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
+}
+
+func TestUserMute(t *testing.T) {
+	im := &IM{Client: newTestClient(t)}
+	resp, err := im.UserMute(&UserMuteParam{
+		Accid: testAccID,
+		Mute:  false,
+	})
+	assertNil(t, err)
+	assertNotNil(t, resp)
+	assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
 }

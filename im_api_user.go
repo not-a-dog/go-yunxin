@@ -27,8 +27,8 @@ func (im *IM) RefreshToken(param *RefreshTokenParam) (*RefreshTokenResponse, err
 	return &result, nil
 }
 
-func (im *IM) BlockUser(param *BlockUserParam) (*BlockUserResponse, error) {
-	var result BlockUserResponse
+func (im *IM) UserBlock(param *UserBlockParam) (*UserBlockResponse, error) {
+	var result UserBlockResponse
 	err := im.PostFormAs(param, &result)
 	if err != nil {
 		return nil, err
@@ -36,8 +36,8 @@ func (im *IM) BlockUser(param *BlockUserParam) (*BlockUserResponse, error) {
 	return &result, nil
 }
 
-func (im *IM) UnBlockUser(param *UnBlockUserParam) (*UnBlockUserResponse, error) {
-	var result UnBlockUserResponse
+func (im *IM) UserUnBlock(param *UserUnBlockParam) (*UserUnBlockResponse, error) {
+	var result UserUnBlockResponse
 	err := im.PostFormAs(param, &result)
 	if err != nil {
 		return nil, err
@@ -56,6 +56,24 @@ func (im *IM) UpdateUserInfo(param *UpdateUserInfoParam) (*UpdateUserInfoRespons
 
 func (im *IM) GetUserInfos(param *GetUserInfosParam) (*GetUserInfosResponse, error) {
 	var result GetUserInfosResponse
+	err := im.PostFormAs(param, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func (im *IM) UserSetDonnop(param *UserSetDonnopParam) (*UserSetDonnopResponse, error) {
+	var result UserSetDonnopResponse
+	err := im.PostFormAs(param, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func (im *IM) UserMute(param *UserMuteParam) (*UserMuteResponse, error) {
+	var result UserMuteResponse
 	err := im.PostFormAs(param, &result)
 	if err != nil {
 		return nil, err
