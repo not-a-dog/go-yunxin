@@ -4,10 +4,11 @@ const (
 	PathUserCreate       = `/user/create.action`
 	PathUserUpdate       = `/user/update.action`
 	PathUserRefreshToken = `/user/refreshToken.action`
-	PathBlockUser        = `/user/block.action`
-	PathUnBlockUser      = `/user/unblock.action`
+	PathUserBlock        = `/user/block.action`
+	PathUserUnBlock      = `/user/unblock.action`
 	PathUpdateUserInfo   = `/user/updateUinfo.action`
 	PathGetUserInfos     = `/user/getUinfos.action`
+	PathSetDonnopUser    = `/user/setDonnop.action`
 )
 
 type CreateUserParam struct {
@@ -77,7 +78,7 @@ type BlockUserParam struct {
 }
 
 func (BlockUserParam) GetPath() string {
-	return PathBlockUser
+	return PathUserBlock
 }
 
 type BlockUserResponse struct {
@@ -89,7 +90,7 @@ type UnBlockUserParam struct {
 }
 
 func (UnBlockUserParam) GetPath() string {
-	return PathUnBlockUser
+	return PathUserUnBlock
 }
 
 type UnBlockUserResponse struct {
