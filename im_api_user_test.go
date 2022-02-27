@@ -25,5 +25,16 @@ func TestYuxinUpdateUser(t *testing.T) {
 	assertNil(t, err)
 	assert(t, err == nil)
 	assert(t, resp.Code > 0, resp.RawBody)
-	// assert(t, resp.IsSuccess(), resp.RawBody, os.Getenv(`YUNXIN_TEST_ACCID`))
+	assert(t, resp.IsSuccess(), resp.RawBody, os.Getenv(`YUNXIN_TEST_ACCID`))
+}
+
+func TestIMReferToken(t *testing.T) {
+	im := &IM{Client: newTestClient(t)}
+	resp, err := im.RefreshToken(&RefreshTokenParam{
+		Accid: os.Getenv(`YUNXIN_TEST_ACCID`),
+	})
+
+	assertNil(t, err)
+	assertNotNil(t, resp)
+	assert(t, resp.IsSuccess(), resp.RawBody, os.Getenv(`YUNXIN_TEST_ACCID`))
 }

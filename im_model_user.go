@@ -1,8 +1,9 @@
 package yunxin
 
 const (
-	PathUserCreate = `/user/create.action`
-	PathUserUpdate = `/user/update.action`
+	PathUserCreate       = `/user/create.action`
+	PathUserUpdate       = `/user/update.action`
+	PathUserRefreshToken = `/user/refreshToken.action`
 )
 
 type CreateUserParam struct {
@@ -35,8 +36,8 @@ type CreateUserInfo struct {
 }
 
 type UpdateUserParam struct {
-	Accid string `json:"accid"`
-	Token string `json:"token"`
+	Accid string `schema:"accid,required"`
+	Token string `schema:"token,required"`
 }
 
 func (p UpdateUserParam) GetPath() string {
@@ -45,4 +46,22 @@ func (p UpdateUserParam) GetPath() string {
 
 type UpdateUserResponse struct {
 	BasicResponese
+}
+
+type RefreshTokenParam struct {
+	Accid string `schema:"accid,required"`
+}
+
+func (RefreshTokenParam) GetPath() string {
+	return PathUserRefreshToken
+}
+
+type RefreshTokenResponse struct {
+	BasicResponese
+	Info *RefreshTokenInfo
+}
+
+type RefreshTokenInfo struct {
+	Accid string `json:"accid"`
+	Token string `json:"token"`
 }
