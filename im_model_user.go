@@ -6,6 +6,8 @@ const (
 	PathUserRefreshToken = `/user/refreshToken.action`
 	PathBlockUser        = `/user/block.action`
 	PathUnBlockUser      = `/user/unblock.action`
+	PathUpdateUserInfo   = `/user/updateUinfo.action`
+	PathGetUserInfos     = `/user/getUinfos.action`
 )
 
 type CreateUserParam struct {
@@ -92,4 +94,52 @@ func (UnBlockUserParam) GetPath() string {
 
 type UnBlockUserResponse struct {
 	BasicResponese
+}
+
+type UpdateUserInfoParam struct {
+	Accid  string `schema:"accid,required"`
+	Name   string `schema:"name"`
+	Icon   string `schema:"icon"`
+	Sign   string `schema:"sign"` // 用户签名
+	Email  string `schema:"email"`
+	Birth  string `schema:"birth"`
+	Mobile string `schema:"mobile"`
+	Gender int    `schema:"gender"`
+	Ex     string `schema:"ex"`
+	Bid    string `schema:"bid"` // 反垃圾业务ID，JSON字符串，{"textbid":"","picbid":""}
+}
+
+func (UpdateUserInfoParam) GetPath() string {
+	return PathUpdateUserInfo
+}
+
+type UpdateUserInfoResponse struct {
+	BasicResponese
+}
+
+type GetUserInfosParam struct {
+	Accids StringSlice `schema:"accids,required"`
+}
+
+func (GetUserInfosParam) GetPath() string {
+	return PathGetUserInfos
+}
+
+type GetUserInfosResponse struct {
+	BasicResponese
+	Uinfos []*UserInfo `json:"uinfos"`
+}
+
+type UserInfo struct {
+	Accid  string `json:"accid"`
+	Name   string `json:"name"`
+	Icon   string `json:"icon"`
+	Sign   string `json:"sign"` // 用户签名
+	Email  string `json:"email"`
+	Birth  string `json:"birth"`
+	Mobile string `json:"mobile"`
+	Ex     string `json:"ex"`
+	Gender int    `json:"gender"`
+	Valid  bool   `json:"valid"`
+	Mute   bool   `json:"mute"`
 }
