@@ -47,3 +47,9 @@ func TestClientForm(t *testing.T) {
 	assertNil(t, err)
 	assert(t, r.Code == 0, r.RawBody)
 }
+
+func TestClientSignToken(t *testing.T) {
+	client := NewClient("abc", "def", &Configure{})
+	token := client.SignToken("accid", 600)
+	assert(t, len(token) == 120, token)
+}
