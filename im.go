@@ -19,4 +19,7 @@ const (
 	PathFriendUpdate = `/friend/update.action`
 	PathFriendDelete = `/friend/delete.action`
 	PathFriendGet    = `/friend/get.action`
+
+	PathUserSetSpecialRelation   = `/user/setSpecialRelation.action`
+	PathUserListBlackAndMuteList = `/user/listBlackAndMuteList.action`
 )
