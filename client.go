@@ -100,12 +100,16 @@ func (c *Client) do(r *http.Request) (*http.Response, error) {
 	return c.HTTPClient.Do(r)
 }
 
+type Param interface {
+	GetPath() string
+}
+
 type Response interface {
 	SetRawBody(raw []byte)
 }
 
-func (c *Client) PostFormAs(path string, value interface{}, outPtr Response) error {
-	resp, err := c.PostForm(PathCreateUser, value)
+func (c *Client) PostFormAs(param Param, outPtr Response) error {
+	resp, err := c.PostForm(param.GetPath(), param)
 	if err != nil {
 		return err
 	}
