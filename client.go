@@ -3,8 +3,10 @@ package yunxin
 import (
 	"context"
 	"crypto/sha1"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -51,6 +53,38 @@ func (c *Client) AddCheckSum(r *http.Request) {
 	r.Header.Set("CheckSum", checkSum)
 }
 
+func (c *Client) URL(path string) string {
+	if c.Host == "" {
+		return DefaultHost + path
+	}
+	return c.Host + path
+}
+
+func (c *Client) do(r *http.Request) (*http.Response, error) {
+	c.AddCheckSum(r)
+	ctx := r.Context()
+	// add timeout ? TODO: use HTTPClient.Timeout ?
+	if c.Timeout > 0 {
+		ctx, cancel := context.WithTimeout(ctx, c.Timeout)
+		defer cancel()
+		r = r.WithContext(ctx)
+	}
+
+	return c.HTTPClient.Do(r)
+}
+
+func (c *Client) PostForm(path string, value interface{}) (*http.Response, error) {
+	r, err := http.NewRequest("POST", c.URL(path), nil)
+	if err != nil {
+		return nil, err
+	}
+	err = c.AddFormBody(r, value)
+	if err != nil {
+		return nil, err
+	}
+	return c.do(r)
+}
+
 func (c *Client) AddFormBody(r *http.Request, v interface{}) error {
 	form := url.Values{}
 	err := c.FormEncoder.Encode(v, form)
@@ -72,46 +106,6 @@ func (c *Client) DecodeResponse(resp *http.Response, outPtr Response) error {
 	return json.Unmarshal(raw, &outPtr)
 }
 
-func (c *Client) URL(path string) string {
-	if c.Host == "" {
-		return DefaultHost + path
-	}
-	return c.Host + path
-}
-
-func (c *Client) do(r *http.Request) (*http.Response, error) {
-	c.AddCheckSum(r)
-	ctx := r.Context()
-	// add timeout ? TODO: check HTTPClient.Timeout
-	if c.Timeout > 0 {
-		ctx, cancel := context.WithTimeout(ctx, c.Timeout)
-		defer cancel()
-		r = r.WithContext(ctx)
-	}
-
-	return c.HTTPClient.Do(r)
-}
-
-func (c *Client) Post(path string, body io.Reader) (*http.Response, error) {
-	r, err := http.NewRequest("POST", c.URL(path), body)
-	if err != nil {
-		return nil, err
-	}
-	return c.do(r)
-}
-
-func (c *Client) PostForm(path string, value interface{}) (*http.Response, error) {
-	r, err := http.NewRequest("POST", c.URL(path), nil)
-	if err != nil {
-		return nil, err
-	}
-	err = c.AddFormBody(r, value)
-	if err != nil {
-		return nil, err
-	}
-	return c.do(r)
-}
-
 type Param interface {
 	GetPath() string
 }
@@ -126,4 +120,39 @@ func (c *Client) PostFormAs(param Param, outPtr Response) error {
 		return err
 	}
 	return c.DecodeResponse(resp, outPtr)
+}
+
+func (c *Client) SignToken(accid string, ttl int) string {
+	currentTime := time.Now().UnixMilli()
+	text := fmt.Sprintf("%s%s%d%d%s",
+		c.appKey,
+		accid,
+		currentTime,
+		ttl,
+		c.appSecret,
+	)
+	h := sha1.New()
+	_, _ = h.Write([]byte(text))
+	signature := hex.EncodeToString(h.Sum(nil))
+	payload := map[string]interface{}{
+		"signature": signature,
+		"curTime":   currentTime,
+		"ttl":       ttl,
+	}
+	data, _ := json.Marshal(payload)
+	return base64.StdEncoding.EncodeToString(data)
+}
+
+type BasicResponese struct {
+	RawBody string `json:"-"`
+	Code    int    `json:"code"`
+	Desc    string `json:"desc,omitempty"`
+}
+
+func (r *BasicResponese) IsSuccess() bool {
+	return r.Code == 200
+}
+
+func (r *BasicResponese) SetRawBody(raw []byte) {
+	r.RawBody = string(raw)
 }
