@@ -10,18 +10,21 @@ type PostData struct {
 	Accid string `schema:"accid"`
 }
 
+func assert(t *testing.T, ok bool, msg ...interface{}) {
+	t.Helper()
+	if !ok {
+		t.Error(`assertion failed`, msg)
+	}
+}
+
 func assertNil(t *testing.T, value interface{}) {
 	t.Helper()
-	if value != nil {
-		t.Errorf("value should be nil, but got %v", value)
-	}
+	assert(t, value == nil, "value should be nil, but got ", value)
 }
 
 func assertNotNil(t *testing.T, value interface{}) {
 	t.Helper()
-	if value == nil {
-		t.Errorf("value should not be nil, but got %v", value)
-	}
+	assert(t, value != nil, "value should not be nil ", value)
 }
 
 func TestClientForm(t *testing.T) {
@@ -38,4 +41,9 @@ func TestClientForm(t *testing.T) {
 	response, err := http.DefaultClient.Do(request)
 	assertNil(t, err)
 	assertNotNil(t, response)
+
+	var r BasicResponese
+	err = client.DecodeResponse(response, &r)
+	assertNil(t, err)
+	assert(t, r.Code == 0, r.RawBody)
 }

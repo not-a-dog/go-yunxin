@@ -60,11 +60,34 @@ func (c *Client) AddFormBody(r *http.Request, v interface{}) error {
 	return nil
 }
 
+func (c *Client) DecodeResponse(resp *http.Response, outPtr Response) error {
+	defer resp.Body.Close()
+	raw, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	outPtr.SetRawBody(raw)
+	return json.Unmarshal(raw, &outPtr)
+}
+
 func (c *Client) URL(path string) string {
 	if c.Host == "" {
 		return DefaultHost + path
 	}
 	return c.Host + path
+}
+
+func (c *Client) do(r *http.Request) (*http.Response, error) {
+	c.AddCheckSum(r)
+	ctx := r.Context()
+	// add timeout ? TODO: check HTTPClient.Timeout
+	if c.Timeout > 0 {
+		ctx, cancel := context.WithTimeout(ctx, c.Timeout)
+		defer cancel()
+		r = r.WithContext(ctx)
+	}
+
+	return c.HTTPClient.Do(r)
 }
 
 func (c *Client) Post(path string, body io.Reader) (*http.Response, error) {
@@ -87,19 +110,6 @@ func (c *Client) PostForm(path string, value interface{}) (*http.Response, error
 	return c.do(r)
 }
 
-func (c *Client) do(r *http.Request) (*http.Response, error) {
-	c.AddCheckSum(r)
-	ctx := r.Context()
-	// add timeout ? TODO: check HTTPClient.Timeout
-	if c.Timeout > 0 {
-		ctx, cancel := context.WithTimeout(ctx, c.Timeout)
-		defer cancel()
-		r = r.WithContext(ctx)
-	}
-
-	return c.HTTPClient.Do(r)
-}
-
 type Param interface {
 	GetPath() string
 }
@@ -113,16 +123,5 @@ func (c *Client) PostFormAs(param Param, outPtr Response) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
-	raw, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	outPtr.SetRawBody(raw)
-	err = json.Unmarshal(raw, &outPtr)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.DecodeResponse(resp, outPtr)
 }

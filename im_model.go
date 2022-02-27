@@ -3,6 +3,7 @@ package yunxin
 type BasicResponese struct {
 	RawBody string `json:"-"`
 	Code    int    `json:"code"`
+	Desc    string `json:"desc"`
 }
 
 func (r *BasicResponese) IsSuccess() bool {
