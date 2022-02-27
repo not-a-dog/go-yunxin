@@ -23,8 +23,7 @@ func TestYuxinUpdateUser(t *testing.T) {
 	})
 
 	assertNil(t, err)
-	assert(t, err == nil)
-	assert(t, resp.Code > 0, resp.RawBody)
+	assertNotNil(t, resp)
 	assert(t, resp.IsSuccess(), resp.RawBody, os.Getenv(`YUNXIN_TEST_ACCID`))
 }
 
