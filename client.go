@@ -146,7 +146,7 @@ func (c *Client) SignToken(accid string, ttl int) string {
 type BasicResponese struct {
 	RawBody string `json:"-"`
 	Code    int    `json:"code"`
-	Desc    string `json:"desc,omitempty"`
+	Desc    string `json:"desc,omitempty"` // Error description
 }
 
 func (r *BasicResponese) IsSuccess() bool {

@@ -1,17 +1,5 @@
 package yunxin
 
-const (
-	PathUserCreate       = `/user/create.action`
-	PathUserUpdate       = `/user/update.action`
-	PathUserRefreshToken = `/user/refreshToken.action`
-	PathUserBlock        = `/user/block.action`
-	PathUserUnBlock      = `/user/unblock.action`
-	PathUpdateUserInfo   = `/user/updateUinfo.action`
-	PathGetUserInfos     = `/user/getUinfos.action`
-	PathUserSetDonnop    = `/user/setDonnop.action`
-	PathUserMute         = `/user/mute.action`
-)
-
 type CreateUserParam struct {
 	Accid  string `schema:"accid,required"`
 	Name   string `schema:"name"`

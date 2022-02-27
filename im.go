@@ -3,3 +3,20 @@ package yunxin
 type IM struct {
 	*Client
 }
+
+const (
+	PathUserCreate       = `/user/create.action`
+	PathUserUpdate       = `/user/update.action`
+	PathUserRefreshToken = `/user/refreshToken.action`
+	PathUserBlock        = `/user/block.action`
+	PathUserUnBlock      = `/user/unblock.action`
+	PathUpdateUserInfo   = `/user/updateUinfo.action`
+	PathGetUserInfos     = `/user/getUinfos.action`
+	PathUserSetDonnop    = `/user/setDonnop.action`
+	PathUserMute         = `/user/mute.action`
+
+	PathFriendAdd    = `/friend/add.action`
+	PathFriendUpdate = `/friend/update.action`
+	PathFriendDelete = `/friend/delete.action`
+	PathFriendGet    = `/friend/get.action`
+)
