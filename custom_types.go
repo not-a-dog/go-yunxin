@@ -9,12 +9,13 @@ import (
 
 type StringSlice []string
 
-func StringSliceEncoder(v reflect.Value) string {
-	ss := v.Interface().(StringSlice)
-	data, _ := json.Marshal(ss)
+func JSONFormEncode(v reflect.Value) string {
+	value := v.Interface()
+	data, _ := json.Marshal(value)
 	return string(data)
 }
 
 func LoadCustomTypes(e *schema.Encoder) {
-	e.RegisterEncoder(StringSlice{}, StringSliceEncoder)
+	e.RegisterEncoder(StringSlice{}, JSONFormEncode)
+	e.RegisterEncoder(AntispamCustom{}, JSONFormEncode)
 }

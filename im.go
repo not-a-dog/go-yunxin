@@ -22,4 +22,6 @@ const (
 
 	PathUserSetSpecialRelation   = `/user/setSpecialRelation.action`
 	PathUserListBlackAndMuteList = `/user/listBlackAndMuteList.action`
+
+	PathMsgSendMsg = `/msg/sendMsg.action`
 )
