@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+var testAccID = os.Getenv("YUNXIN_TEST_ACCID")
+
 func newTestClient(t *testing.T) *Client {
 	t.Helper()
 	key := os.Getenv(`YUNXIN_APP_KEY`)
@@ -18,22 +20,35 @@ func newTestClient(t *testing.T) *Client {
 func TestYuxinUpdateUser(t *testing.T) {
 	im := &IM{Client: newTestClient(t)}
 	resp, err := im.UpdateUser(&UpdateUserParam{
-		Accid: os.Getenv(`YUNXIN_TEST_ACCID`),
+		Accid: testAccID,
 		Token: `notoken`,
 	})
 
 	assertNil(t, err)
 	assertNotNil(t, resp)
-	assert(t, resp.IsSuccess(), resp.RawBody, os.Getenv(`YUNXIN_TEST_ACCID`))
+	assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
 }
 
 func TestIMReferToken(t *testing.T) {
 	im := &IM{Client: newTestClient(t)}
 	resp, err := im.RefreshToken(&RefreshTokenParam{
-		Accid: os.Getenv(`YUNXIN_TEST_ACCID`),
+		Accid: testAccID,
 	})
 
 	assertNil(t, err)
 	assertNotNil(t, resp)
-	assert(t, resp.IsSuccess(), resp.RawBody, os.Getenv(`YUNXIN_TEST_ACCID`))
+	assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
+}
+
+func TestBlockAndUnBlockUser(t *testing.T) {
+	im := &IM{Client: newTestClient(t)}
+	resp, err := im.BlockUser(&BlockUserParam{Accid: testAccID})
+	assertNil(t, err)
+	assertNotNil(t, resp)
+	assert(t, resp.IsSuccess(), resp.RawBody, testAccID)
+
+	resp2, err := im.UnBlockUser(&UnBlockUserParam{Accid: testAccID})
+	assertNil(t, err)
+	assertNotNil(t, resp2)
+	assert(t, resp2.IsSuccess(), resp2.RawBody, testAccID)
 }

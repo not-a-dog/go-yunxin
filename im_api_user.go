@@ -26,3 +26,21 @@ func (im *IM) RefreshToken(param *RefreshTokenParam) (*RefreshTokenResponse, err
 	}
 	return &result, nil
 }
+
+func (im *IM) BlockUser(param *BlockUserParam) (*BlockUserResponse, error) {
+	var result BlockUserResponse
+	err := im.PostFormAs(param, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
+}
+
+func (im *IM) UnBlockUser(param *UnBlockUserParam) (*UnBlockUserResponse, error) {
+	var result UnBlockUserResponse
+	err := im.PostFormAs(param, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
+}

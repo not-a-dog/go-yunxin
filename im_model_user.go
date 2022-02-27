@@ -4,6 +4,8 @@ const (
 	PathUserCreate       = `/user/create.action`
 	PathUserUpdate       = `/user/update.action`
 	PathUserRefreshToken = `/user/refreshToken.action`
+	PathBlockUser        = `/user/block.action`
+	PathUnBlockUser      = `/user/unblock.action`
 )
 
 type CreateUserParam struct {
@@ -26,7 +28,7 @@ func (p CreateUserParam) GetPath() string {
 
 type CreateUserResponse struct {
 	BasicResponese
-	Info *CreateUserInfo
+	Info *CreateUserInfo `json:"info"`
 }
 
 type CreateUserInfo struct {
@@ -37,7 +39,7 @@ type CreateUserInfo struct {
 
 type UpdateUserParam struct {
 	Accid string `schema:"accid,required"`
-	Token string `schema:"token,required"`
+	Token string `schema:"token"`
 }
 
 func (p UpdateUserParam) GetPath() string {
@@ -58,10 +60,36 @@ func (RefreshTokenParam) GetPath() string {
 
 type RefreshTokenResponse struct {
 	BasicResponese
-	Info *RefreshTokenInfo
+	Info *RefreshTokenInfo `json:"info"`
 }
 
 type RefreshTokenInfo struct {
 	Accid string `json:"accid"`
 	Token string `json:"token"`
+}
+
+type BlockUserParam struct {
+	Accid         string `schema:"accid,required"`
+	Needkick      bool   `schema:"needkick"`
+	KickNotifyExt string `schema:"kickNotifyExt"`
+}
+
+func (BlockUserParam) GetPath() string {
+	return PathBlockUser
+}
+
+type BlockUserResponse struct {
+	BasicResponese
+}
+
+type UnBlockUserParam struct {
+	Accid string `schema:"accid,required"`
+}
+
+func (UnBlockUserParam) GetPath() string {
+	return PathUnBlockUser
+}
+
+type UnBlockUserResponse struct {
+	BasicResponese
 }
