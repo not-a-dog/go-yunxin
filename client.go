@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -98,7 +97,7 @@ func (c *Client) AddFormBody(r *http.Request, v interface{}) error {
 
 func (c *Client) DecodeResponse(resp *http.Response, outPtr Response) error {
 	defer resp.Body.Close()
-	raw, err := ioutil.ReadAll(resp.Body)
+	raw, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
