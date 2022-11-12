@@ -24,4 +24,6 @@ const (
 	PathUserListBlackAndMuteList = `/user/listBlackAndMuteList.action`
 
 	PathMsgSendMsg = `/msg/sendMsg.action`
+
+	PathChatRoomCreate = `/chatroom/create.action`
 )
