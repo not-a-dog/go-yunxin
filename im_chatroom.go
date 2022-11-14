@@ -1,6 +1,5 @@
 package yunxin
 
-// go:generate go run gen/main.go
 type ChatRoomCreateParam struct {
 	Creator          string           `schema:"creator,required"`
 	Name             string           `schema:"name,required"`
