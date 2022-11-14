@@ -59,10 +59,6 @@ func WithHost(host string) Option {
 	}
 }
 
-func (c *Client) IM() *IM {
-	return &IM{Client: c}
-}
-
 func (c *Client) AddCheckSum(r *http.Request) {
 	curTime := strconv.FormatInt(time.Now().Unix(), 10)
 	nonce := strconv.FormatInt(rand.Int63(), 10)
@@ -92,14 +88,14 @@ func (c *Client) PostForm(ctx context.Context, path string, value any) (*http.Re
 	if err != nil {
 		return nil, err
 	}
-	err = c.addFormBody(r, value)
+	err = c.AddFormBody(r, value)
 	if err != nil {
 		return nil, err
 	}
 	return c.do(ctx, r)
 }
 
-func (c *Client) addFormBody(r *http.Request, v any) error {
+func (c *Client) AddFormBody(r *http.Request, v any) error {
 	form := url.Values{}
 	err := c.formEncoder.Encode(v, form)
 	if err != nil {

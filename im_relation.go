@@ -73,20 +73,20 @@ type FriendInfo struct {
 	Alias       string `json:"alias"`
 }
 
-func (im *IM) FriendAdd(ctx context.Context, param *FriendAddParam) (*FriendAddResponse, error) {
-	return Request[FriendAddResponse](im.Client, ctx, param)
+func (c *Client) FriendAdd(ctx context.Context, param *FriendAddParam) (*FriendAddResponse, error) {
+	return Request[FriendAddResponse](c, ctx, param)
 }
 
-func (im *IM) FriendUpdate(ctx context.Context, param *FriendUpdateParam) (*FriendUpdateResponse, error) {
-	return Request[FriendUpdateResponse](im.Client, ctx, param)
+func (c *Client) FriendUpdate(ctx context.Context, param *FriendUpdateParam) (*FriendUpdateResponse, error) {
+	return Request[FriendUpdateResponse](c, ctx, param)
 }
 
-func (im *IM) FriendDelete(ctx context.Context, param *FriendDeleteParam) (*FriendDeleteResponse, error) {
-	return Request[FriendDeleteResponse](im.Client, ctx, param)
+func (c *Client) FriendDelete(ctx context.Context, param *FriendDeleteParam) (*FriendDeleteResponse, error) {
+	return Request[FriendDeleteResponse](c, ctx, param)
 }
 
-func (im *IM) FriendGet(ctx context.Context, param *FriendGetParam) (*FriendGetResponse, error) {
-	return Request[FriendGetResponse](im.Client, ctx, param)
+func (c *Client) FriendGet(ctx context.Context, param *FriendGetParam) (*FriendGetResponse, error) {
+	return Request[FriendGetResponse](c, ctx, param)
 }
 
 type UserSetSpecialRelationParam struct {
@@ -124,10 +124,10 @@ type UserListBlackAndMuteListResponse struct {
 	MuteList  []string `json:"mutelist"`
 }
 
-func (im *IM) UserSetSpecialRelation(ctx context.Context, param *UserSetSpecialRelationParam) (*UserSetSpecialRelationResponse, error) {
-	return Request[UserSetSpecialRelationResponse](im.Client, ctx, param)
+func (c *Client) UserSetSpecialRelation(ctx context.Context, param *UserSetSpecialRelationParam) (*UserSetSpecialRelationResponse, error) {
+	return Request[UserSetSpecialRelationResponse](c, ctx, param)
 }
 
-func (im *IM) UserListBlackAndMuteList(ctx context.Context, param *UserListBlackAndMuteListParam) (*UserListBlackAndMuteListResponse, error) {
-	return Request[UserListBlackAndMuteListResponse](im.Client, ctx, param)
+func (c *Client) UserListBlackAndMuteList(ctx context.Context, param *UserListBlackAndMuteListParam) (*UserListBlackAndMuteListResponse, error) {
+	return Request[UserListBlackAndMuteListResponse](c, ctx, param)
 }

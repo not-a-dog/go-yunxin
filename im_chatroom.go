@@ -1,7 +1,6 @@
 package yunxin
 
-import "context"
-
+// go:generate go run gen/main.go
 type ChatRoomCreateParam struct {
 	Creator          string           `schema:"creator,required"`
 	Name             string           `schema:"name,required"`
@@ -12,10 +11,6 @@ type ChatRoomCreateParam struct {
 	Bid              string           `schema:"bid"` // TODO json string
 	DelayClosePolicy DelayClosePolicy `schema:"delayClosePolicy"`
 	DelaySeconds     int64            `schema:"delaySeconds"`
-}
-
-func (ChatRoomCreateParam) GetPath() string {
-	return PathChatRoomCreate
 }
 
 type QueueLevel int
@@ -56,8 +51,4 @@ type ChatroomDelayInfo struct {
 	DelayClosePolicy bool `json:"delayClosePolicy"`
 	DelaySeconds     bool `json:"delaySeconds"`
 	Status           bool `json:"status"`
-}
-
-func (im *IM) ChatRoomCreate(ctx context.Context, param *ChatRoomCreateParam) (*ChatRoomCreateResponse, error) {
-	return Request[ChatRoomCreateResponse](im.Client, ctx, param)
 }

@@ -150,38 +150,38 @@ func (UserMuteParam) GetPath() string {
 
 type UserMuteResponse BasicResponse
 
-func (im *IM) CreateUser(ctx context.Context, param *CreateUserParam) (*CreateUserResponse, error) {
-	return Request[CreateUserResponse](im.Client, ctx, param)
+func (c *Client) CreateUser(ctx context.Context, param *CreateUserParam) (*CreateUserResponse, error) {
+	return Request[CreateUserResponse](c, ctx, param)
 }
 
-func (im *IM) UpdateUser(ctx context.Context, param *UpdateUserParam) (*UpdateUserResponse, error) {
-	return Request[UpdateUserResponse](im.Client, ctx, param)
+func (c *Client) UpdateUser(ctx context.Context, param *UpdateUserParam) (*UpdateUserResponse, error) {
+	return Request[UpdateUserResponse](c, ctx, param)
 }
 
-func (im *IM) RefreshToken(ctx context.Context, param *RefreshTokenParam) (*RefreshTokenResponse, error) {
-	return Request[RefreshTokenResponse](im.Client, ctx, param)
+func (c *Client) RefreshToken(ctx context.Context, param *RefreshTokenParam) (*RefreshTokenResponse, error) {
+	return Request[RefreshTokenResponse](c, ctx, param)
 }
 
-func (im *IM) UserBlock(ctx context.Context, param *UserBlockParam) (*UserBlockResponse, error) {
-	return Request[UserBlockResponse](im.Client, ctx, param)
+func (c *Client) UserBlock(ctx context.Context, param *UserBlockParam) (*UserBlockResponse, error) {
+	return Request[UserBlockResponse](c, ctx, param)
 }
 
-func (im *IM) UserUnBlock(ctx context.Context, param *UserUnBlockParam) (*UserUnBlockResponse, error) {
-	return Request[UserUnBlockResponse](im.Client, ctx, param)
+func (c *Client) UserUnBlock(ctx context.Context, param *UserUnBlockParam) (*UserUnBlockResponse, error) {
+	return Request[UserUnBlockResponse](c, ctx, param)
 }
 
-func (im *IM) UpdateUserInfo(ctx context.Context, param *UpdateUserInfoParam) (*UpdateUserInfoResponse, error) {
-	return Request[UpdateUserInfoResponse](im.Client, ctx, param)
+func (c *Client) UpdateUserInfo(ctx context.Context, param *UpdateUserInfoParam) (*UpdateUserInfoResponse, error) {
+	return Request[UpdateUserInfoResponse](c, ctx, param)
 }
 
-func (im *IM) GetUserInfos(ctx context.Context, param *GetUserInfosParam) (*GetUserInfosResponse, error) {
-	return Request[GetUserInfosResponse](im.Client, ctx, param)
+func (c *Client) GetUserInfos(ctx context.Context, param *GetUserInfosParam) (*GetUserInfosResponse, error) {
+	return Request[GetUserInfosResponse](c, ctx, param)
 }
 
-func (im *IM) UserSetDonnop(ctx context.Context, param *UserSetDonnopParam) (*UserSetDonnopResponse, error) {
-	return Request[UserSetDonnopResponse](im.Client, ctx, param)
+func (c *Client) UserSetDonnop(ctx context.Context, param *UserSetDonnopParam) (*UserSetDonnopResponse, error) {
+	return Request[UserSetDonnopResponse](c, ctx, param)
 }
 
-func (im *IM) UserMute(ctx context.Context, param *UserMuteParam) (*UserMuteResponse, error) {
-	return Request[UserMuteResponse](im.Client, ctx, param)
+func (c *Client) UserMute(ctx context.Context, param *UserMuteParam) (*UserMuteResponse, error) {
+	return Request[UserMuteResponse](c, ctx, param)
 }
