@@ -20,7 +20,7 @@ func newTestClient(t *testing.T) *Client {
 	return NewClient(key, secert, &Configure{})
 }
 
-func TestYuxinUpdateUser(t *testing.T) {
+func TestYunxinUpdateUser(t *testing.T) {
 	im := &IM{Client: newTestClient(t)}
 	resp, err := im.UpdateUser(&UpdateUserParam{
 		Accid: testAccID,

@@ -22,18 +22,17 @@ type Client struct {
 	appKey      string
 	appSecret   string
 	FormEncoder *schema.Encoder
+	Host        string
 	HTTPClient  *http.Client
-	*Configure
 }
 
-func NewClient(appKey, appSecert string, cfg *Configure) *Client {
+func NewClient(appKey, appSecert string) *Client {
 	encoder := schema.NewEncoder()
 	LoadCustomTypes(encoder)
 	return &Client{
 		appKey:      appKey,
 		appSecret:   appSecert,
 		FormEncoder: encoder,
-		Configure:   cfg,
 		HTTPClient:  http.DefaultClient,
 	}
 }
