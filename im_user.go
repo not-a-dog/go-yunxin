@@ -1,6 +1,8 @@
 package yunxin
 
-import "context"
+import (
+	"context"
+)
 
 type CreateUserParam struct {
 	Accid  string `schema:"accid,required"`

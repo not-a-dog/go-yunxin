@@ -2,15 +2,37 @@ package yunxin
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/gorilla/schema"
 	"net/http"
+	"reflect"
 )
 
-type WithRawBody interface {
-	SetRawBody(raw []byte)
+var defaultEncoder = schema.NewEncoder()
+
+func RegisterEncoder(value interface{}, encoder func(reflect.Value) string) {
+	defaultEncoder.RegisterEncoder(value, encoder)
+}
+
+func init() {
+	RegisterEncoder(StringSlice{}, JSONFormEncode)
+	RegisterEncoder(AntispamCustom{}, JSONFormEncode)
+}
+
+type StringSlice []string
+
+func JSONFormEncode(v reflect.Value) string {
+	value := v.Interface()
+	data, _ := json.Marshal(value)
+	return string(data)
 }
 
 type Param interface {
 	GetPath() string
+}
+
+type WithRawBody interface {
+	SetRawBody(raw []byte)
 }
 
 type RawBodyModel struct {
@@ -20,6 +42,8 @@ type RawBodyModel struct {
 func (r *RawBodyModel) SetRawBody(raw []byte) {
 	r.RawBody = string(raw)
 }
+
+var _ WithRawBody = new(RawBodyModel)
 
 type BasicResponse struct {
 	RawBodyModel
