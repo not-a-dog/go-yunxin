@@ -1,5 +1,7 @@
 package yunxin
 
+import "context"
+
 type CreateUserParam struct {
 	Accid  string `schema:"accid,required"`
 	Name   string `schema:"name"`
@@ -19,7 +21,7 @@ func (p CreateUserParam) GetPath() string {
 }
 
 type CreateUserResponse struct {
-	BasicResponese
+	BasicResponse
 	Info *CreateUserInfo `json:"info"`
 }
 
@@ -38,9 +40,7 @@ func (p UpdateUserParam) GetPath() string {
 	return PathUserUpdate
 }
 
-type UpdateUserResponse struct {
-	BasicResponese
-}
+type UpdateUserResponse BasicResponse
 
 type RefreshTokenParam struct {
 	Accid string `schema:"accid,required"`
@@ -51,7 +51,7 @@ func (RefreshTokenParam) GetPath() string {
 }
 
 type RefreshTokenResponse struct {
-	BasicResponese
+	BasicResponse
 	Info *RefreshTokenInfo `json:"info"`
 }
 
@@ -70,9 +70,7 @@ func (UserBlockParam) GetPath() string {
 	return PathUserBlock
 }
 
-type UserBlockResponse struct {
-	BasicResponese
-}
+type UserBlockResponse BasicResponse
 
 type UserUnBlockParam struct {
 	Accid string `schema:"accid,required"`
@@ -82,9 +80,7 @@ func (UserUnBlockParam) GetPath() string {
 	return PathUserUnBlock
 }
 
-type UserUnBlockResponse struct {
-	BasicResponese
-}
+type UserUnBlockResponse BasicResponse
 
 type UpdateUserInfoParam struct {
 	Accid  string `schema:"accid,required"`
@@ -103,9 +99,7 @@ func (UpdateUserInfoParam) GetPath() string {
 	return PathUpdateUserInfo
 }
 
-type UpdateUserInfoResponse struct {
-	BasicResponese
-}
+type UpdateUserInfoResponse BasicResponse
 
 type GetUserInfosParam struct {
 	Accids StringSlice `schema:"accids,required"`
@@ -116,7 +110,7 @@ func (GetUserInfosParam) GetPath() string {
 }
 
 type GetUserInfosResponse struct {
-	BasicResponese
+	BasicResponse
 	Uinfos []*UserInfo `json:"uinfos"`
 }
 
@@ -143,9 +137,7 @@ func (UserSetDonnopParam) GetPath() string {
 	return PathUserSetDonnop
 }
 
-type UserSetDonnopResponse struct {
-	BasicResponese
-}
+type UserSetDonnopResponse BasicResponse
 
 type UserMuteParam struct {
 	Accid string `schema:"accid,required"`
@@ -156,87 +148,40 @@ func (UserMuteParam) GetPath() string {
 	return PathUserMute
 }
 
-type UserMuteResponse struct {
-	BasicResponese
+type UserMuteResponse BasicResponse
+
+func (im *IM) CreateUser(ctx context.Context, param *CreateUserParam) (*CreateUserResponse, error) {
+	return Request[CreateUserResponse](im.Client, ctx, param)
 }
 
-func (im *IM) CreateUser(param *CreateUserParam) (*CreateUserResponse, error) {
-	var result CreateUserResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) UpdateUser(ctx context.Context, param *UpdateUserParam) (*UpdateUserResponse, error) {
+	return Request[UpdateUserResponse](im.Client, ctx, param)
 }
 
-func (im *IM) UpdateUser(param *UpdateUserParam) (*UpdateUserResponse, error) {
-	var result UpdateUserResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) RefreshToken(ctx context.Context, param *RefreshTokenParam) (*RefreshTokenResponse, error) {
+	return Request[RefreshTokenResponse](im.Client, ctx, param)
 }
 
-func (im *IM) RefreshToken(param *RefreshTokenParam) (*RefreshTokenResponse, error) {
-	var result RefreshTokenResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) UserBlock(ctx context.Context, param *UserBlockParam) (*UserBlockResponse, error) {
+	return Request[UserBlockResponse](im.Client, ctx, param)
 }
 
-func (im *IM) UserBlock(param *UserBlockParam) (*UserBlockResponse, error) {
-	var result UserBlockResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) UserUnBlock(ctx context.Context, param *UserUnBlockParam) (*UserUnBlockResponse, error) {
+	return Request[UserUnBlockResponse](im.Client, ctx, param)
 }
 
-func (im *IM) UserUnBlock(param *UserUnBlockParam) (*UserUnBlockResponse, error) {
-	var result UserUnBlockResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) UpdateUserInfo(ctx context.Context, param *UpdateUserInfoParam) (*UpdateUserInfoResponse, error) {
+	return Request[UpdateUserInfoResponse](im.Client, ctx, param)
 }
 
-func (im *IM) UpdateUserInfo(param *UpdateUserInfoParam) (*UpdateUserInfoResponse, error) {
-	var result UpdateUserInfoResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) GetUserInfos(ctx context.Context, param *GetUserInfosParam) (*GetUserInfosResponse, error) {
+	return Request[GetUserInfosResponse](im.Client, ctx, param)
 }
 
-func (im *IM) GetUserInfos(param *GetUserInfosParam) (*GetUserInfosResponse, error) {
-	var result GetUserInfosResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) UserSetDonnop(ctx context.Context, param *UserSetDonnopParam) (*UserSetDonnopResponse, error) {
+	return Request[UserSetDonnopResponse](im.Client, ctx, param)
 }
 
-func (im *IM) UserSetDonnop(param *UserSetDonnopParam) (*UserSetDonnopResponse, error) {
-	var result UserSetDonnopResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
-}
-
-func (im *IM) UserMute(param *UserMuteParam) (*UserMuteResponse, error) {
-	var result UserMuteResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) UserMute(ctx context.Context, param *UserMuteParam) (*UserMuteResponse, error) {
+	return Request[UserMuteResponse](im.Client, ctx, param)
 }

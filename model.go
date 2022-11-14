@@ -1,34 +1,31 @@
 package yunxin
 
 type MsgSendMsgParam struct {
-	From    string  `schema:"from,required"`
-	Ope     OpeType `schema:"ope,required"`
-	To      string  `schema:"to,required"`
-	Type    MsgType `schema:"type,required"`
-	Body    string  `schema:"body,required"` // JSON 格式
-	MsgDesc string  `schema:"msgDesc"`
-
-	Option           *SendMsgOption `schema:"option"`
-	Pushcontent      string         `schema:"pushcontent"`
-	Payload          string         `schema:"payload"` // JSON 格式
-	Ext              string         `schema:"ext"`
-	Forcepushlist    StringSlice    `schema:"forcepushlist"`
-	Forcepushcontent string         `schema:"forcepushcontent"`
-	Forcepushall     bool           `schema:"forcepushall"`
-	Bid              string         `schema:"bid"`
-
-	Antispam          bool            `schema:"antispam"`
-	AntispamCustom    *AntispamCustom `schema:"antispamCustom"`
-	UseYidun          *int            `schema:"useYidun"`          // https://doc.yunxin.163.com/docs/TM5MzM5Njk/DEwMTE3NzQ?platformId=60353
-	YidunAntiCheating string          `schema:"yidunAntiCheating"` // JSON
-	YidunAntiSpamExt  string          `schema:"yidunAntiSpamExt"`  // JSON
-
-	MarkRead           *int   `schema:"markRead"`
-	CheckFriend        bool   `schema:"checkFriend"`
-	SubType            int    `schema:"subType,omitempty"`
-	MsgSenderNoSense   int    `schema:"msgSenderNoSense"`
-	MsgReceiverNoSense int    `schema:"msgReceiverNoSense"`
-	Env                string `schema:"env"`
+	From               string          `schema:"from,required"`
+	Ope                OpeType         `schema:"ope,required"`
+	To                 string          `schema:"to,required"`
+	Type               MsgType         `schema:"type,required"`
+	Body               string          `schema:"body,required"` // JSON 格式
+	MsgDesc            string          `schema:"msgDesc"`
+	Option             *SendMsgOption  `schema:"option"`
+	Pushcontent        string          `schema:"pushcontent"`
+	Payload            string          `schema:"payload"` // JSON 格式
+	Ext                string          `schema:"ext"`
+	Forcepushlist      StringSlice     `schema:"forcepushlist"`
+	Forcepushcontent   string          `schema:"forcepushcontent"`
+	Forcepushall       bool            `schema:"forcepushall"`
+	Bid                string          `schema:"bid"`
+	Antispam           bool            `schema:"antispam"`
+	AntispamCustom     *AntispamCustom `schema:"antispamCustom"`
+	UseYidun           *int            `schema:"useYidun"`          // https://doc.yunxin.163.com/docs/TM5MzM5Njk/DEwMTE3NzQ?platformId=60353
+	YidunAntiCheating  string          `schema:"yidunAntiCheating"` // JSON
+	YidunAntiSpamExt   string          `schema:"yidunAntiSpamExt"`  // JSON
+	MarkRead           *int            `schema:"markRead"`
+	CheckFriend        bool            `schema:"checkFriend"`
+	SubType            int             `schema:"subType,omitempty"`
+	MsgSenderNoSense   int             `schema:"msgSenderNoSense"`
+	MsgReceiverNoSense int             `schema:"msgReceiverNoSense"`
+	Env                string          `schema:"env"`
 }
 
 type OpeType int

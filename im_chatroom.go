@@ -1,10 +1,12 @@
 package yunxin
 
+import "context"
+
 type ChatRoomCreateParam struct {
 	Creator          string           `schema:"creator,required"`
 	Name             string           `schema:"name,required"`
 	Announcement     string           `schema:"announcement"`
-	Broadcasturl     string           `schema:"broadcasturl"`
+	BroadcastURL     string           `schema:"broadcasturl"`
 	Ext              string           `schema:"ext"`
 	QueueLevel       QueueLevel       `schema:"queuelevel"`
 	Bid              string           `schema:"bid"` // TODO json string
@@ -32,12 +34,12 @@ const (
 )
 
 type ChatRoomCreateResponse struct {
-	BasicResponese
-	ChatRoomCreateParam *ChatRoomInfo `json:"chatroom"`
+	BasicResponse
+	ChatRoomInfo *ChatRoomInfo `json:"chatroom"`
 }
 
 type ChatRoomInfo struct {
-	Roomid       string            `json:"roomid"`
+	RoomID       string            `json:"roomid"`
 	Valid        bool              `json:"valid"`
 	Announcement string            `json:"announcement"`
 	Name         string            `json:"name"`
@@ -56,11 +58,6 @@ type ChatroomDelayInfo struct {
 	Status           bool `json:"status"`
 }
 
-func (im *IM) ChatRoomCreate(param *ChatRoomCreateParam) (*ChatRoomCreateResponse, error) {
-	var result ChatRoomCreateResponse
-	err := im.PostFormAs(param, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
+func (im *IM) ChatRoomCreate(ctx context.Context, param *ChatRoomCreateParam) (*ChatRoomCreateResponse, error) {
+	return Request[ChatRoomCreateResponse](im.Client, ctx, param)
 }

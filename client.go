@@ -3,10 +3,8 @@ package yunxin
 import (
 	"context"
 	"crypto/sha1"
-	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
 	"io"
 	"math/rand"
 	"net/http"
@@ -21,20 +19,48 @@ import (
 type Client struct {
 	appKey      string
 	appSecret   string
-	FormEncoder *schema.Encoder
-	Host        string
-	HTTPClient  *http.Client
+	formEncoder *schema.Encoder
+	host        string
+	http        *http.Client
 }
 
-func NewClient(appKey, appSecert string) *Client {
-	encoder := schema.NewEncoder()
-	LoadCustomTypes(encoder)
-	return &Client{
+func NewClient(appKey, appSecret string, opts ...Option) *Client {
+	c := &Client{
 		appKey:      appKey,
-		appSecret:   appSecert,
-		FormEncoder: encoder,
-		HTTPClient:  http.DefaultClient,
+		appSecret:   appSecret,
+		formEncoder: defaultEncoder,
+		http:        http.DefaultClient,
+		host:        DefaultHost,
 	}
+
+	for _, opt := range opts {
+		opt(c)
+	}
+	return c
+}
+
+type Option func(c *Client)
+
+func WithEncoder(encoder *schema.Encoder) Option {
+	return func(c *Client) {
+		c.formEncoder = encoder
+	}
+}
+
+func WithHTTPClient(h *http.Client) Option {
+	return func(c *Client) {
+		c.http = h
+	}
+}
+
+func WithHost(host string) Option {
+	return func(c *Client) {
+		c.host = host
+	}
+}
+
+func (c *Client) IM() *IM {
+	return &IM{Client: c}
 }
 
 func (c *Client) AddCheckSum(r *http.Request) {
@@ -45,112 +71,53 @@ func (c *Client) AddCheckSum(r *http.Request) {
 	_, _ = h.Write([]byte(c.appSecret + nonce + curTime))
 	checkSum := hex.EncodeToString(h.Sum(nil))
 
-	r.Header.Set("AppKey", c.appKey)
-	r.Header.Set("Nonce", nonce)
-	r.Header.Set("CurTime", curTime)
-	r.Header.Set("CheckSum", checkSum)
+	r.Header.Set(HTTPAppKey, c.appKey)
+	r.Header.Set(HTTPNonce, nonce)
+	r.Header.Set(HTTPCurTime, curTime)
+	r.Header.Set(HTTPCheckSum, checkSum)
 }
 
 func (c *Client) URL(path string) string {
-	if c.Host == "" {
-		return DefaultHost + path
-	}
-	return c.Host + path
+	return c.host + path
 }
 
-func (c *Client) do(r *http.Request) (*http.Response, error) {
+func (c *Client) do(ctx context.Context, r *http.Request) (*http.Response, error) {
 	c.AddCheckSum(r)
-	ctx := r.Context()
-	// add timeout ? TODO: use HTTPClient.Timeout ?
-	if c.Timeout > 0 {
-		ctx, cancel := context.WithTimeout(ctx, c.Timeout)
-		defer cancel()
-		r = r.WithContext(ctx)
-	}
-
-	return c.HTTPClient.Do(r)
+	r = r.WithContext(ctx)
+	return c.http.Do(r)
 }
 
-func (c *Client) PostForm(path string, value interface{}) (*http.Response, error) {
+func (c *Client) PostForm(ctx context.Context, path string, value any) (*http.Response, error) {
 	r, err := http.NewRequest("POST", c.URL(path), nil)
 	if err != nil {
 		return nil, err
 	}
-	err = c.AddFormBody(r, value)
+	err = c.addFormBody(r, value)
 	if err != nil {
 		return nil, err
 	}
-	return c.do(r)
+	return c.do(ctx, r)
 }
 
-func (c *Client) AddFormBody(r *http.Request, v interface{}) error {
+func (c *Client) addFormBody(r *http.Request, v any) error {
 	form := url.Values{}
-	err := c.FormEncoder.Encode(v, form)
+	err := c.formEncoder.Encode(v, form)
 	if err != nil {
 		return err
 	}
 	r.Body = io.NopCloser(strings.NewReader(form.Encode()))
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+	r.Header.Set(HTTPContentType, HTTPXFormURLEncoded)
 	return nil
 }
 
-func (c *Client) DecodeResponse(resp *http.Response, outPtr Response) error {
+func (c *Client) JSONResponse(resp *http.Response, outPtr any) error {
 	defer resp.Body.Close()
 	raw, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
-	outPtr.SetRawBody(raw)
-	return json.Unmarshal(raw, &outPtr)
-}
-
-type Param interface {
-	GetPath() string
-}
-
-type Response interface {
-	SetRawBody(raw []byte)
-}
-
-func (c *Client) PostFormAs(param Param, outPtr Response) error {
-	resp, err := c.PostForm(param.GetPath(), param)
-	if err != nil {
-		return err
+	if r, ok := outPtr.(WithRawBody); ok {
+		r.SetRawBody(raw)
 	}
-	return c.DecodeResponse(resp, outPtr)
-}
-
-func (c *Client) SignToken(accid string, ttl int) string {
-	currentTime := time.Now().UnixMilli()
-	text := fmt.Sprintf("%s%s%d%d%s",
-		c.appKey,
-		accid,
-		currentTime,
-		ttl,
-		c.appSecret,
-	)
-	h := sha1.New()
-	_, _ = h.Write([]byte(text))
-	signature := hex.EncodeToString(h.Sum(nil))
-	payload := map[string]interface{}{
-		"signature": signature,
-		"curTime":   currentTime,
-		"ttl":       ttl,
-	}
-	data, _ := json.Marshal(payload)
-	return base64.StdEncoding.EncodeToString(data)
-}
-
-type BasicResponese struct {
-	RawBody string `json:"-"`
-	Code    int    `json:"code"`
-	Desc    string `json:"desc,omitempty"` // Error description
-}
-
-func (r *BasicResponese) IsSuccess() bool {
-	return r.Code == 200
-}
-
-func (r *BasicResponese) SetRawBody(raw []byte) {
-	r.RawBody = string(raw)
+	return json.Unmarshal(raw, outPtr)
 }
