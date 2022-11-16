@@ -60,7 +60,7 @@ type UserUnBlockParam struct {
 
 type UserUnBlockResponse BasicResponse
 
-type UpdateUserInfoParam struct {
+type UserUpdateUserInfoParam struct {
 	Accid  string `schema:"accid,required"`
 	Name   string `schema:"name"`
 	Icon   string `schema:"icon"`
@@ -73,7 +73,7 @@ type UpdateUserInfoParam struct {
 	Bid    string `schema:"bid"` // 反垃圾业务ID，JSON字符串，{"textbid":"","picbid":""}
 }
 
-type UpdateUserInfoResponse BasicResponse
+type UserUpdateUserInfoResponse BasicResponse
 
 type GetUserInfosParam struct {
 	Accids StringSlice `schema:"accids,required"`

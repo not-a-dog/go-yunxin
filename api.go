@@ -52,14 +52,6 @@ func (c *Client) GetUserInfos(ctx context.Context, param *GetUserInfosParam) (*G
 	return Request[GetUserInfosResponse](c, ctx, param)
 }
 
-func (UpdateUserInfoParam) GetPath() string {
-	return PathUpdateUserInfo
-}
-
-func (c *Client) UpdateUserInfo(ctx context.Context, param *UpdateUserInfoParam) (*UpdateUserInfoResponse, error) {
-	return Request[UpdateUserInfoResponse](c, ctx, param)
-}
-
 func (UserBlockParam) GetPath() string {
 	return PathUserBlock
 }
@@ -130,4 +122,12 @@ func (UserUpdateParam) GetPath() string {
 
 func (c *Client) UserUpdate(ctx context.Context, param *UserUpdateParam) (*UserUpdateResponse, error) {
 	return Request[UserUpdateResponse](c, ctx, param)
+}
+
+func (UserUpdateUserInfoParam) GetPath() string {
+	return PathUserUpdateUserInfo
+}
+
+func (c *Client) UserUpdateUserInfo(ctx context.Context, param *UserUpdateUserInfoParam) (*UserUpdateUserInfoResponse, error) {
+	return Request[UserUpdateUserInfoResponse](c, ctx, param)
 }
