@@ -9,11 +9,11 @@ import (
 	"time"
 )
 
-func (c *Client) SignACCIDToken(accID string, TTLSecond int) string {
+func (c *Client) SignACCIDToken(accid string, TTLSecond int) string {
 	currentTime := time.Now().UnixMilli()
 	text := fmt.Sprintf("%s%s%d%d%s",
 		c.appKey,
-		accID,
+		accid,
 		currentTime,
 		TTLSecond,
 		c.appSecret,

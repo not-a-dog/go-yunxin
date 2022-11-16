@@ -3,12 +3,17 @@ package yunxin
 import (
 	"context"
 	"encoding/json"
-	"github.com/gorilla/schema"
 	"net/http"
 	"reflect"
+
+	"github.com/gorilla/schema"
 )
 
 var defaultEncoder = schema.NewEncoder()
+
+func init() {
+	defaultEncoder.SetAliasTag(`json`)
+}
 
 func RegisterEncoder(value interface{}, encoder func(reflect.Value) string) {
 	defaultEncoder.RegisterEncoder(value, encoder)
