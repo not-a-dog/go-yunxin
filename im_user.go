@@ -1,10 +1,6 @@
 package yunxin
 
-import (
-	"context"
-)
-
-type CreateUserParam struct {
+type UserCreateParam struct {
 	Accid  string `schema:"accid,required"`
 	Name   string `schema:"name"`
 	Icon   string `schema:"icon"`
@@ -18,11 +14,7 @@ type CreateUserParam struct {
 	Bid    string `schema:"bid"`
 }
 
-func (p CreateUserParam) GetPath() string {
-	return PathUserCreate
-}
-
-type CreateUserResponse struct {
+type UserCreateResponse struct {
 	BasicResponse
 	Info *CreateUserInfo `json:"info"`
 }
@@ -33,26 +25,18 @@ type CreateUserInfo struct {
 	Name  string `json:"name"`
 }
 
-type UpdateUserParam struct {
+type UserUpdateParam struct {
 	Accid string `schema:"accid,required"`
 	Token string `schema:"token"`
 }
 
-func (p UpdateUserParam) GetPath() string {
-	return PathUserUpdate
-}
+type UserUpdateResponse BasicResponse
 
-type UpdateUserResponse BasicResponse
-
-type RefreshTokenParam struct {
+type UserRefreshTokenParam struct {
 	Accid string `schema:"accid,required"`
 }
 
-func (RefreshTokenParam) GetPath() string {
-	return PathUserRefreshToken
-}
-
-type RefreshTokenResponse struct {
+type UserRefreshTokenResponse struct {
 	BasicResponse
 	Info *RefreshTokenInfo `json:"info"`
 }
@@ -68,18 +52,10 @@ type UserBlockParam struct {
 	KickNotifyExt string `schema:"kickNotifyExt"`
 }
 
-func (UserBlockParam) GetPath() string {
-	return PathUserBlock
-}
-
 type UserBlockResponse BasicResponse
 
 type UserUnBlockParam struct {
 	Accid string `schema:"accid,required"`
-}
-
-func (UserUnBlockParam) GetPath() string {
-	return PathUserUnBlock
 }
 
 type UserUnBlockResponse BasicResponse
@@ -97,18 +73,10 @@ type UpdateUserInfoParam struct {
 	Bid    string `schema:"bid"` // 反垃圾业务ID，JSON字符串，{"textbid":"","picbid":""}
 }
 
-func (UpdateUserInfoParam) GetPath() string {
-	return PathUpdateUserInfo
-}
-
 type UpdateUserInfoResponse BasicResponse
 
 type GetUserInfosParam struct {
 	Accids StringSlice `schema:"accids,required"`
-}
-
-func (GetUserInfosParam) GetPath() string {
-	return PathGetUserInfos
 }
 
 type GetUserInfosResponse struct {
@@ -135,10 +103,6 @@ type UserSetDonnopParam struct {
 	DonnopOpen bool   `schema:"donnopOpen,required"`
 }
 
-func (UserSetDonnopParam) GetPath() string {
-	return PathUserSetDonnop
-}
-
 type UserSetDonnopResponse BasicResponse
 
 type UserMuteParam struct {
@@ -146,44 +110,4 @@ type UserMuteParam struct {
 	Mute  bool   `schema:"mute,required"`
 }
 
-func (UserMuteParam) GetPath() string {
-	return PathUserMute
-}
-
 type UserMuteResponse BasicResponse
-
-func (c *Client) CreateUser(ctx context.Context, param *CreateUserParam) (*CreateUserResponse, error) {
-	return Request[CreateUserResponse](c, ctx, param)
-}
-
-func (c *Client) UpdateUser(ctx context.Context, param *UpdateUserParam) (*UpdateUserResponse, error) {
-	return Request[UpdateUserResponse](c, ctx, param)
-}
-
-func (c *Client) RefreshToken(ctx context.Context, param *RefreshTokenParam) (*RefreshTokenResponse, error) {
-	return Request[RefreshTokenResponse](c, ctx, param)
-}
-
-func (c *Client) UserBlock(ctx context.Context, param *UserBlockParam) (*UserBlockResponse, error) {
-	return Request[UserBlockResponse](c, ctx, param)
-}
-
-func (c *Client) UserUnBlock(ctx context.Context, param *UserUnBlockParam) (*UserUnBlockResponse, error) {
-	return Request[UserUnBlockResponse](c, ctx, param)
-}
-
-func (c *Client) UpdateUserInfo(ctx context.Context, param *UpdateUserInfoParam) (*UpdateUserInfoResponse, error) {
-	return Request[UpdateUserInfoResponse](c, ctx, param)
-}
-
-func (c *Client) GetUserInfos(ctx context.Context, param *GetUserInfosParam) (*GetUserInfosResponse, error) {
-	return Request[GetUserInfosResponse](c, ctx, param)
-}
-
-func (c *Client) UserSetDonnop(ctx context.Context, param *UserSetDonnopParam) (*UserSetDonnopResponse, error) {
-	return Request[UserSetDonnopResponse](c, ctx, param)
-}
-
-func (c *Client) UserMute(ctx context.Context, param *UserMuteParam) (*UserMuteResponse, error) {
-	return Request[UserMuteResponse](c, ctx, param)
-}

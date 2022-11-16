@@ -1,6 +1,6 @@
 package yunxin
 
-type MsgSendMsgParam struct {
+type MsgSendMsgParamTODO struct {
 	From               string          `schema:"from,required"`
 	Ope                OpeType         `schema:"ope,required"`
 	To                 string          `schema:"to,required"`
