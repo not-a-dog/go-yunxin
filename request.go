@@ -67,5 +67,5 @@ func Request[T any](client *Client, ctx context.Context, param Param) (*T, error
 		return nil, err
 	}
 	err = client.JSONResponse(resp, &r)
-	return r, nil
+	return r, err
 }
