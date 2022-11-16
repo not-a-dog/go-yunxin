@@ -1,7 +1,7 @@
 package yunxin
 
 type UserCreateParam struct {
-	Accid   string `schema:"accid,required"`
+	Accid  string `schema:"accid,required"`
 	Name   string `schema:"name"`
 	Icon   string `schema:"icon"`
 	Token  string `schema:"token"`
@@ -47,7 +47,7 @@ type RefreshTokenInfo struct {
 }
 
 type UserBlockParam struct {
-	Accid          string `schema:"accid,required"`
+	Accid         string `schema:"accid,required"`
 	Needkick      bool   `schema:"needkick"`
 	KickNotifyExt string `schema:"kickNotifyExt"`
 }
