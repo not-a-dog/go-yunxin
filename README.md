@@ -2,6 +2,16 @@
 
 https://dev.yunxin.163.com/ server side API sdk
 
+https://pkg.go.dev/github.com/not-a-dog/go-yunxin
+
+## Usage
+
+```go
+
+client := yunxin.NewClient("", "")
+user, err := client.GetUserInfos(ctx, &yunxin.GetUserInfosParam{Accids: []string{"111111"}})
+```
+
 
 ## Dev
 
