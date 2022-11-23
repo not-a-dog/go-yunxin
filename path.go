@@ -23,6 +23,7 @@ const (
 
 	PathChatRoomCreate      = `/chatroom/create.action`
 	PathChatroomGet         = `/chatroom/get.action`
+	PathChatroomGetBatch    = `/chatroom/getBatch.action`
 	PathChatRoomRequestAddr = `/chatroom/requestAddr.action`
 	PathChatRoomSendMsg     = `/chatroom/sendMsg.action`
 )

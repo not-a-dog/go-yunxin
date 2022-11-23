@@ -36,6 +36,14 @@ func (c *Client) ChatroomGet(ctx context.Context, param *ChatroomGetParam) (*Cha
 	return Request[ChatroomGetResponse](c, ctx, param)
 }
 
+func (ChatroomGetBatchParam) GetPath() string {
+	return PathChatroomGetBatch
+}
+
+func (c *Client) ChatroomGetBatch(ctx context.Context, param *ChatroomGetBatchParam) (*ChatroomGetBatchResponse, error) {
+	return Request[ChatroomGetBatchResponse](c, ctx, param)
+}
+
 func (FriendAddParam) GetPath() string {
 	return PathFriendAdd
 }

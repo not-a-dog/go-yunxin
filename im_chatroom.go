@@ -35,7 +35,7 @@ type ChatRoomCreateResponse struct {
 type ChatRoomInfo struct {
 	RoomID          int64             `json:"roomid"`
 	Valid           bool              `json:"valid"`
-	Announcement    string            `json:"announcement"`
+	Announcement    *string           `json:"announcement"`
 	Name            string            `json:"name"`
 	Broadcasturl    string            `json:"broadcasturl"`
 	Ext             string            `json:"ext"`
@@ -44,6 +44,7 @@ type ChatRoomInfo struct {
 	Creator         string            `json:"creator"`
 	DelayInfo       ChatroomDelayInfo `json:"delayInfo"`
 	Onlineusercount *int              `json:"onlineusercount,omitempty"`
+	IOnotify        *bool             `json:"ionotify,omitempty"`
 }
 
 type ChatroomDelayInfo struct {
@@ -61,6 +62,18 @@ type ChatroomGetParam struct {
 type ChatroomGetResponse struct {
 	BasicResponse
 	ChatRoom *ChatRoomInfo `json:"chatroom"`
+}
+
+type ChatroomGetBatchParam struct {
+	RoomIDs             StringSlice `schema:"roomids"`
+	NeedOnlineUserCount bool        `schema:"needOnlineUserCount"`
+}
+
+type ChatroomGetBatchResponse struct {
+	BasicResponse
+	NoExistRooms []int64         `json:"noExistRooms"`
+	FailRooms    []int64         `json:"failRooms"`
+	SuccRooms    []*ChatRoomInfo `json:"succRooms"`
 }
 
 type ChatRoomRequestAddrParam struct {

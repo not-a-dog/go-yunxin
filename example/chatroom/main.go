@@ -41,4 +41,10 @@ func main() {
 		SubType:   1,
 	})
 	log.Printf("result3 %+v err %+v \n", result3, err)
+
+	result4, err := client.ChatroomGetBatch(ctx, &yunxin.ChatroomGetBatchParam{
+		RoomIDs:             []string{"2757903841"},
+		NeedOnlineUserCount: true,
+	})
+	log.Printf("result4 %+v err %+v \n", result4, err)
 }
