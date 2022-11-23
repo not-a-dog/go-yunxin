@@ -47,4 +47,10 @@ func main() {
 		NeedOnlineUserCount: true,
 	})
 	log.Printf("result4 %+v err %+v \n", result4, err)
+
+	result5, err := client.ChatRoomMembersByPage(ctx, &yunxin.ChatRoomMembersByPageParam{
+		RoomID: 2757903841,
+		Type:   yunxin.ChatRoomMemberQueryTypeDefault,
+	})
+	log.Printf("result5 %+v err %+v \n", result5, err)
 }

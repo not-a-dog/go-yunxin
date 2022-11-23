@@ -143,3 +143,54 @@ type ChatRoomMsg struct {
 	HighPriorityFlag int    `json:"highPriorityFlag"`
 	MsgAbandonFlag   int    `json:"msgAbandonFlag"`
 }
+
+type ChatRoomMembersByPageParam struct {
+	RoomID  int64                   `schema:"roomid,required"`
+	Type    ChatRoomMemberQueryType `schema:"type,required"`
+	EndTime MillsSecond             `schema:"endtime,required"`
+	Limit   int64                   `schema:"limit,required"` // <=100
+}
+
+type ChatRoomMemberQueryType int
+
+const (
+	ChatRoomMemberQueryTypeDefault ChatRoomMemberQueryType = 0
+	ChatRoomMemberQueryTypeTemp    ChatRoomMemberQueryType = 1
+	ChatRoomMemberQueryTypeOnline  ChatRoomMemberQueryType = 2
+)
+
+type ChatRoomMembersByPageResponse struct {
+	BasicResponse
+	Desc struct {
+		Data []*ChatRoomMember `json:"data"`
+	} `json:"desc"`
+}
+
+type ChatRoomMember struct {
+	RoomID       int64              `json:"roomid"`
+	AccID        string             `json:"accid"`
+	Nick         string             `json:"nick"`
+	Avator       string             `json:"avator"`
+	Ext          string             `json:"ext"`
+	Type         ChatRoomMemberType `json:"type"`
+	Level        int                `json:"level"`
+	OnlineStat   bool               `json:"onlineStat"`
+	EnterTime    MillsSecond        `json:"enterTime"`
+	Blacklisted  bool               `json:"blacklisted"`
+	Muted        bool               `json:"muted"`
+	TempMuted    bool               `json:"tempMuted"`
+	TempMuteTTL  int                `json:"tempMuteTtl"`
+	IsRobot      bool               `json:"isRobot"`
+	RobotExpirAt int                `json:"robotExpirAt"`
+}
+
+type ChatRoomMemberType string
+
+const (
+	ChatRoomMemberTypeUnset     ChatRoomMemberType = "UNSET"
+	ChatRoomMemberTypeLimited   ChatRoomMemberType = "LIMITED"
+	ChatRoomMemberTypeCommon    ChatRoomMemberType = "COMMON"
+	ChatRoomMemberTypeCreator   ChatRoomMemberType = "CREATOR"
+	ChatRoomMemberTypeManager   ChatRoomMemberType = "MANAGER"
+	ChatRoomMemberTypeTemporary ChatRoomMemberType = "TEMPORARY"
+)

@@ -12,6 +12,14 @@ func (c *Client) ChatRoomCreate(ctx context.Context, param *ChatRoomCreateParam)
 	return Request[ChatRoomCreateResponse](c, ctx, param)
 }
 
+func (ChatRoomMembersByPageParam) GetPath() string {
+	return PathChatRoomMembersByPage
+}
+
+func (c *Client) ChatRoomMembersByPage(ctx context.Context, param *ChatRoomMembersByPageParam) (*ChatRoomMembersByPageResponse, error) {
+	return Request[ChatRoomMembersByPageResponse](c, ctx, param)
+}
+
 func (ChatRoomRequestAddrParam) GetPath() string {
 	return PathChatRoomRequestAddr
 }

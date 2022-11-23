@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"reflect"
+	"time"
 
 	"github.com/gorilla/schema"
 )
@@ -21,10 +22,19 @@ func JSONFormEncode(v reflect.Value) string {
 	return string(data)
 }
 
-type StringSlice []string
-
 func init() {
 	RegisterEncoder(StringSlice{}, JSONFormEncode)
+}
+
+type StringSlice []string
+type MillsSecond int64
+
+func NewMillsSecond(t time.Time) MillsSecond {
+	return MillsSecond(t.UnixMilli())
+}
+
+func (t MillsSecond) ToTime() time.Time {
+	return time.UnixMilli(int64(t))
 }
 
 type Param interface {
