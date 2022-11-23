@@ -23,3 +23,8 @@ user, err := client.GetUserInfos(ctx, &yunxin.GetUserInfosParam{Accids: []string
 4. go generate
 5. go build ./...
 
+### 测试
+
+```bash
+WY_APP_KEY=xxx WY_APP_SECRET=yyy go run example/chatroom/main.go
+```

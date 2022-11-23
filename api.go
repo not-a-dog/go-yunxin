@@ -12,6 +12,30 @@ func (c *Client) ChatRoomCreate(ctx context.Context, param *ChatRoomCreateParam)
 	return Request[ChatRoomCreateResponse](c, ctx, param)
 }
 
+func (ChatRoomRequestAddrParam) GetPath() string {
+	return PathChatRoomRequestAddr
+}
+
+func (c *Client) ChatRoomRequestAddr(ctx context.Context, param *ChatRoomRequestAddrParam) (*ChatRoomRequestAddrResponse, error) {
+	return Request[ChatRoomRequestAddrResponse](c, ctx, param)
+}
+
+func (ChatRoomSendMsgParam) GetPath() string {
+	return PathChatRoomSendMsg
+}
+
+func (c *Client) ChatRoomSendMsg(ctx context.Context, param *ChatRoomSendMsgParam) (*ChatRoomSendMsgResponse, error) {
+	return Request[ChatRoomSendMsgResponse](c, ctx, param)
+}
+
+func (ChatroomGetParam) GetPath() string {
+	return PathChatroomGet
+}
+
+func (c *Client) ChatroomGet(ctx context.Context, param *ChatroomGetParam) (*ChatroomGetResponse, error) {
+	return Request[ChatroomGetResponse](c, ctx, param)
+}
+
 func (FriendAddParam) GetPath() string {
 	return PathFriendAdd
 }

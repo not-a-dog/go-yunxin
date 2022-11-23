@@ -11,10 +11,6 @@ import (
 
 var defaultEncoder = schema.NewEncoder()
 
-func init() {
-	defaultEncoder.SetAliasTag(`json`)
-}
-
 func RegisterEncoder(value interface{}, encoder func(reflect.Value) string) {
 	defaultEncoder.RegisterEncoder(value, encoder)
 }
@@ -66,6 +62,6 @@ func Request[T any](client *Client, ctx context.Context, param Param) (*T, error
 	if err != nil {
 		return nil, err
 	}
-	err = client.JSONResponse(resp, &r)
+	err = client.JSONResponse(resp, r)
 	return r, err
 }

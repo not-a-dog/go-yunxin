@@ -21,5 +21,8 @@ const (
 
 	PathMsgSendMsg = `/msg/sendMsg.action`
 
-	PathChatRoomCreate = `/chatroom/create.action`
+	PathChatRoomCreate      = `/chatroom/create.action`
+	PathChatroomGet         = `/chatroom/get.action`
+	PathChatRoomRequestAddr = `/chatroom/requestAddr.action`
+	PathChatRoomSendMsg     = `/chatroom/sendMsg.action`
 )
