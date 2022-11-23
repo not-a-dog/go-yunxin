@@ -96,7 +96,7 @@ func (c *Client) do(ctx context.Context, r *http.Request) (*http.Response, error
 }
 
 func (c *Client) PostForm(ctx context.Context, path string, value any) (*http.Response, error) {
-	r, err := http.NewRequest("POST", c.URL(path), nil)
+	r, err := http.NewRequest(http.MethodPost, c.URL(path), nil)
 	if err != nil {
 		return nil, err
 	}
