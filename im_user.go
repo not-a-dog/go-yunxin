@@ -1,7 +1,7 @@
 package yunxin
 
 type UserCreateParam struct {
-	Accid  string `schema:"accid,required"`
+	AccID  string `schema:"accid,required"`
 	Name   string `schema:"name"`
 	Icon   string `schema:"icon"`
 	Token  string `schema:"token"`
@@ -20,20 +20,20 @@ type UserCreateResponse struct {
 }
 
 type CreateUserInfo struct {
-	Accid string `json:"accid"`
+	AccID string `json:"accid"`
 	Token string `json:"token"`
 	Name  string `json:"name"`
 }
 
 type UserUpdateParam struct {
-	Accid string `schema:"accid,required"`
+	AccID string `schema:"accid,required"`
 	Token string `schema:"token"`
 }
 
 type UserUpdateResponse BasicResponse
 
 type UserRefreshTokenParam struct {
-	Accid string `schema:"accid,required"`
+	AccID string `schema:"accid,required"`
 }
 
 type UserRefreshTokenResponse struct {
@@ -42,12 +42,12 @@ type UserRefreshTokenResponse struct {
 }
 
 type RefreshTokenInfo struct {
-	Accid string `json:"accid"`
+	AccID string `json:"accid"`
 	Token string `json:"token"`
 }
 
 type UserBlockParam struct {
-	Accid         string `schema:"accid,required"`
+	AccID         string `schema:"accid,required"`
 	Needkick      bool   `schema:"needkick"`
 	KickNotifyExt string `schema:"kickNotifyExt"`
 }
@@ -55,13 +55,13 @@ type UserBlockParam struct {
 type UserBlockResponse BasicResponse
 
 type UserUnBlockParam struct {
-	Accid string `schema:"accid,required"`
+	AccID string `schema:"accid,required"`
 }
 
 type UserUnBlockResponse BasicResponse
 
 type UserUpdateUserInfoParam struct {
-	Accid  string `schema:"accid,required"`
+	AccID  string `schema:"accid,required"`
 	Name   string `schema:"name"`
 	Icon   string `schema:"icon"`
 	Sign   string `schema:"sign"` // 用户签名
@@ -85,7 +85,7 @@ type GetUserInfosResponse struct {
 }
 
 type UserInfo struct {
-	Accid  string `json:"accid"`
+	AccID  string `json:"accid"`
 	Name   string `json:"name"`
 	Icon   string `json:"icon"`
 	Sign   string `json:"sign"` // 用户签名
@@ -99,14 +99,14 @@ type UserInfo struct {
 }
 
 type UserSetDonnopParam struct {
-	Accid      string `schema:"accid,required"`
+	AccID      string `schema:"accid,required"`
 	DonnopOpen bool   `schema:"donnopOpen,required"`
 }
 
 type UserSetDonnopResponse BasicResponse
 
 type UserMuteParam struct {
-	Accid string `schema:"accid,required"`
+	AccID string `schema:"accid,required"`
 	Mute  bool   `schema:"mute,required"`
 }
 

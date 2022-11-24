@@ -1,8 +1,8 @@
 package yunxin
 
 type FriendAddParam struct {
-	Accid    string        `schema:"accid,required"`
-	FAccid   string        `schema:"faccid,required"`
+	AccID    string        `schema:"accid,required"`
+	FAccID   string        `schema:"faccid,required"`
 	Type     FriendAddType `schema:"type,required"`
 	Msg      string        `schema:"msg"`
 	ServerEx string        `schema:"serverex"`
@@ -21,8 +21,8 @@ const (
 type FriendAddResponse BasicResponse
 
 type FriendUpdateParam struct {
-	Accid    string `schema:"accid,required"`
-	FAccid   string `schema:"faccid,required"`
+	AccID    string `schema:"accid,required"`
+	FAccID   string `schema:"faccid,required"`
 	Alias    string `schema:"alias"`
 	Ex       string `schema:"ex"`
 	ServerEx string `schema:"serverex"`
@@ -31,15 +31,15 @@ type FriendUpdateParam struct {
 type FriendUpdateResponse BasicResponse
 
 type FriendDeleteParam struct {
-	Accid         string `schema:"accid,required"`
-	FAccid        string `schema:"faccid,required"`
+	AccID         string `schema:"accid,required"`
+	FAccID        string `schema:"faccid,required"`
 	IsDeleteAlias bool   `schema:"isDeleteAlias"`
 }
 
 type FriendDeleteResponse BasicResponse
 
 type FriendGetParam struct {
-	Accid      string `schema:"accid,required"`
+	AccID      string `schema:"accid,required"`
 	UpdateTime int64  `schema:"updatetime,required"` // 毫秒
 }
 
@@ -49,14 +49,14 @@ type FriendGetResponse struct {
 }
 
 type FriendInfo struct {
-	FAccid      string `json:"faccid"`
+	FAccID      string `json:"faccid"`
 	CreateTime  int64  `json:"createtime"`
 	BiDirection bool   `json:"bidirection"`
 	Alias       string `json:"alias"`
 }
 
 type UserSetSpecialRelationParam struct {
-	Accid        string       `schema:"accid,required"`
+	AccID        string       `schema:"accid,required"`
 	TargetAcc    string       `schema:"targetAcc,required"`
 	RelationType RelationType `schema:"relationType,required"`
 	Value        int          `schema:"value,required"` // 0:取消，1:加入
@@ -73,7 +73,7 @@ const (
 type UserSetSpecialRelationResponse BasicResponse
 
 type UserListBlackAndMuteListParam struct {
-	Accid string `schema:"accid,required"`
+	AccID string `schema:"accid,required"`
 }
 
 type UserListBlackAndMuteListResponse struct {
