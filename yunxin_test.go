@@ -1,6 +1,7 @@
 package yunxin
 
 import (
+	"errors"
 	"net/url"
 	"testing"
 )
@@ -26,5 +27,17 @@ func TestStringSliceEncoder(t *testing.T) {
 
 	if data != `names=["x","y"]` {
 		t.Fatal(data)
+	}
+}
+
+func TestBasicResponse(t *testing.T) {
+	var r = BasicResponse{Code: 100, Desc: ""}
+	if r.IsSuccess() != false {
+		t.Fail()
+	}
+
+	err := r.AsError()
+	if !errors.Is(err, YunxinError) {
+		t.Error(err)
 	}
 }
