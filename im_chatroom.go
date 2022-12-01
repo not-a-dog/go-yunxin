@@ -194,3 +194,44 @@ const (
 	ChatRoomMemberTypeManager   ChatRoomMemberType = "MANAGER"
 	ChatRoomMemberTypeTemporary ChatRoomMemberType = "TEMPORARY"
 )
+
+type ChatRoomSetMemberRoleParam struct {
+	RoomID    int64                        `schema:"roomid,required"`
+	Operator  string                       `schema:"operator,required"`
+	Target    string                       `schema:"target,required"`
+	Opt       ChatRoomSetMemberRoleOptType `schema:"opt,required"`
+	OptValue  bool                         `schema:"optvalue,required"`
+	NotifyExt string                       `schema:"notifyExt"` // json
+}
+
+type ChatRoomSetMemberRoleOptType int
+
+const (
+	ChatRoomSetMemberRoleOptTypeAsAdmin ChatRoomSetMemberRoleOptType = 1
+	ChatRoomSetMemberRoleOptTypeAsNomal ChatRoomSetMemberRoleOptType = 2
+	ChatRoomSetMemberRoleOptTypeAsBlock ChatRoomSetMemberRoleOptType = -1
+	ChatRoomSetMemberRoleOptTypeAsBan   ChatRoomSetMemberRoleOptType = -2
+)
+
+type ChatRoomSetMemberRoleResponse struct {
+	BasicResponse
+	Desc ChatRoomSetMemberRoleBasicInfo `json:"desc"`
+}
+
+type ChatRoomSetMemberRoleBasicInfo struct {
+	RoomID int64              `json:"roomid"`
+	AccID  string             `json:"accid"`
+	Type   ChatRoomMemberType `json:"type"`
+	Level  int                `json:"level"`
+}
+
+type ChatRoomRecallParam struct {
+	RoomID        int64  `schema:"roomid,required"`
+	FromAccID     string `schema:"fromAcc,required"`
+	MsgID         string `schema:"msgId,required"`
+	OperatorAccID string `schema:"operatorAcc,required"` // 消息撤回的操作者accid
+	NotifyExt     string `schema:"notifyExt"`            // json
+	MsgTimetag    int64  `schema:"msgTimetag,required"`  // 被撤回消息的时间戳（单位：毫秒）
+}
+
+type ChatRoomRecallResponse BasicResponse

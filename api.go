@@ -20,6 +20,14 @@ func (c *Client) ChatRoomMembersByPage(ctx context.Context, param *ChatRoomMembe
 	return Request[ChatRoomMembersByPageResponse](c, ctx, param)
 }
 
+func (ChatRoomRecallParam) GetPath() string {
+	return PathChatRoomRecall
+}
+
+func (c *Client) ChatRoomRecall(ctx context.Context, param *ChatRoomRecallParam) (*ChatRoomRecallResponse, error) {
+	return Request[ChatRoomRecallResponse](c, ctx, param)
+}
+
 func (ChatRoomRequestAddrParam) GetPath() string {
 	return PathChatRoomRequestAddr
 }
@@ -34,6 +42,14 @@ func (ChatRoomSendMsgParam) GetPath() string {
 
 func (c *Client) ChatRoomSendMsg(ctx context.Context, param *ChatRoomSendMsgParam) (*ChatRoomSendMsgResponse, error) {
 	return Request[ChatRoomSendMsgResponse](c, ctx, param)
+}
+
+func (ChatRoomSetMemberRoleParam) GetPath() string {
+	return PathChatRoomSetMemberRole
+}
+
+func (c *Client) ChatRoomSetMemberRole(ctx context.Context, param *ChatRoomSetMemberRoleParam) (*ChatRoomSetMemberRoleResponse, error) {
+	return Request[ChatRoomSetMemberRoleResponse](c, ctx, param)
 }
 
 func (ChatroomGetParam) GetPath() string {

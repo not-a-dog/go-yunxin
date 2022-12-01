@@ -27,4 +27,6 @@ const (
 	PathChatRoomRequestAddr   = `/chatroom/requestAddr.action`
 	PathChatRoomSendMsg       = `/chatroom/sendMsg.action`
 	PathChatRoomMembersByPage = `/chatroom/membersByPage.action`
+	PathChatRoomSetMemberRole = `/chatroom/setMemberRole.action`
+	PathChatRoomRecall        = `/chatroom/recall.action`
 )
