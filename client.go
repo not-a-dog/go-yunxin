@@ -34,7 +34,6 @@ type Client struct {
 	formEncoder *schema.Encoder
 	host        string
 	http        *http.Client
-	debug       bool
 	logger      Logger
 }
 
@@ -45,7 +44,6 @@ func NewClient(appKey, appSecret string, opts ...Option) *Client {
 		formEncoder: defaultEncoder,
 		http:        http.DefaultClient,
 		host:        DefaultHost,
-		debug:       false,
 		logger:      new(emptyLogger),
 	}
 
@@ -72,12 +70,6 @@ func WithHTTPClient(h *http.Client) Option {
 func WithHost(host string) Option {
 	return func(c *Client) {
 		c.host = host
-	}
-}
-
-func Debug() Option {
-	return func(c *Client) {
-		c.debug = true
 	}
 }
 

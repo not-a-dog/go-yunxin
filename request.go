@@ -76,22 +76,18 @@ func (r *BasicResponse) AsError() error {
 	//return fmt.Errorf("%w code %d desc %s rawBody:%s", YunxinError, r.Code, r.Desc, r.RawBody)
 }
 
-func Request[T any](client *Client, ctx context.Context, param Param) (*T, error) {
+func Request[T any](c *Client, ctx context.Context, param Param) (*T, error) {
 	var r = new(T)
 	path := param.GetPath()
-	if client.debug {
-		client.logger.Info("request to ", path, " with param ", param)
-	}
-	resp, err := client.PostForm(ctx, path, param)
+
+	c.logger.Info("request to ", path, " with param ", param)
+	resp, err := c.PostForm(ctx, path, param)
 	if err != nil {
-		if client.debug {
-			client.logger.Error("request to ", path, " got err ", err)
-		}
+		c.logger.Error("request to ", path, " got err ", err)
 		return nil, err
 	}
-	err = client.JSONResponse(resp, r)
-	if client.debug {
-		client.logger.Error("request to ", path, " got json resp ", r, " and err ", err)
-	}
+
+	err = c.JSONResponse(resp, r)
+	c.logger.Error("request to ", path, " got json resp ", r, " and json err ", err)
 	return r, err
 }
