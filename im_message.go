@@ -28,4 +28,6 @@ const (
 	DeleteMsgTypeTeam   DeleteMsgType = 8
 )
 
-type MsgDelMsgResponse BasicResponse
+type MsgDelMsgResponse struct {
+	BasicResponse
+}

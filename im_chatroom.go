@@ -234,4 +234,6 @@ type ChatRoomRecallParam struct {
 	MsgTimetag    int64  `schema:"msgTimetag,required"`  // 被撤回消息的时间戳（单位：毫秒）
 }
 
-type ChatRoomRecallResponse BasicResponse
+type ChatRoomRecallResponse struct {
+	BasicResponse
+}

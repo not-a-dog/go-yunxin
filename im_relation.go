@@ -18,7 +18,9 @@ const (
 	FriendAddReject  FriendAddType = 4
 )
 
-type FriendAddResponse BasicResponse
+type FriendAddResponse struct {
+	BasicResponse
+}
 
 type FriendUpdateParam struct {
 	AccID    string `schema:"accid,required"`
@@ -28,7 +30,9 @@ type FriendUpdateParam struct {
 	ServerEx string `schema:"serverex"`
 }
 
-type FriendUpdateResponse BasicResponse
+type FriendUpdateResponse struct {
+	BasicResponse
+}
 
 type FriendDeleteParam struct {
 	AccID         string `schema:"accid,required"`
@@ -36,7 +40,9 @@ type FriendDeleteParam struct {
 	IsDeleteAlias bool   `schema:"isDeleteAlias"`
 }
 
-type FriendDeleteResponse BasicResponse
+type FriendDeleteResponse struct {
+	BasicResponse
+}
 
 type FriendGetParam struct {
 	AccID      string `schema:"accid,required"`
@@ -70,7 +76,9 @@ const (
 	RelationTypeMute  RelationType = 2
 )
 
-type UserSetSpecialRelationResponse BasicResponse
+type UserSetSpecialRelationResponse struct {
+	BasicResponse
+}
 
 type UserListBlackAndMuteListParam struct {
 	AccID string `schema:"accid,required"`

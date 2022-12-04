@@ -30,7 +30,9 @@ type UserUpdateParam struct {
 	Token string `schema:"token"`
 }
 
-type UserUpdateResponse BasicResponse
+type UserUpdateResponse struct {
+	BasicResponse
+}
 
 type UserRefreshTokenParam struct {
 	AccID string `schema:"accid,required"`
@@ -52,13 +54,17 @@ type UserBlockParam struct {
 	KickNotifyExt string `schema:"kickNotifyExt"`
 }
 
-type UserBlockResponse BasicResponse
+type UserBlockResponse struct {
+	BasicResponse
+}
 
 type UserUnBlockParam struct {
 	AccID string `schema:"accid,required"`
 }
 
-type UserUnBlockResponse BasicResponse
+type UserUnBlockResponse struct {
+	BasicResponse
+}
 
 type UserUpdateUserInfoParam struct {
 	AccID  string `schema:"accid,required"`
@@ -73,7 +79,9 @@ type UserUpdateUserInfoParam struct {
 	Bid    string `schema:"bid"` // 反垃圾业务ID，JSON字符串，{"textbid":"","picbid":""}
 }
 
-type UserUpdateUserInfoResponse BasicResponse
+type UserUpdateUserInfoResponse struct {
+	BasicResponse
+}
 
 type GetUserInfosParam struct {
 	Accids StringSlice `schema:"accids,required"`
@@ -103,11 +111,15 @@ type UserSetDonnopParam struct {
 	DonnopOpen bool   `schema:"donnopOpen,required"`
 }
 
-type UserSetDonnopResponse BasicResponse
+type UserSetDonnopResponse struct {
+	BasicResponse
+}
 
 type UserMuteParam struct {
 	AccID string `schema:"accid,required"`
 	Mute  bool   `schema:"mute,required"`
 }
 
-type UserMuteResponse BasicResponse
+type UserMuteResponse struct {
+	BasicResponse
+}
