@@ -41,3 +41,15 @@ func TestBasicResponse(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+type unkonwnResponse struct {
+	BasicResponse
+}
+
+func TestUnkonwnResponse(t *testing.T) {
+	var r unkonwnResponse
+	err := r.AsError()
+	if !errors.Is(err, YunxinError) {
+		t.Error(err)
+	}
+}

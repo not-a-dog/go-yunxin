@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"reflect"
 	"time"
@@ -68,12 +69,12 @@ func (r *BasicResponse) IsSuccess() bool {
 	return r.Code == http.StatusOK
 }
 
-func (r *BasicResponse) AsError() error {
+func (r BasicResponse) AsError() error {
 	if r.Code == http.StatusOK {
 		return nil
 	}
-	return YunxinError
-	//return fmt.Errorf("%w code %d desc %s rawBody:%s", YunxinError, r.Code, r.Desc, r.RawBody)
+
+	return fmt.Errorf("%w code %d desc %s", YunxinError, r.Code, r.Desc)
 }
 
 func Request[T any](c *Client, ctx context.Context, param Param) (*T, error) {
