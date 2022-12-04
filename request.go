@@ -47,6 +47,10 @@ type WithRawBody interface {
 	SetRawBody(raw []byte)
 }
 
+type AsError interface {
+	AsError() error
+}
+
 type RawBodyModel struct {
 	RawBody string `json:"-"`
 }
@@ -89,6 +93,19 @@ func Request[T any](c *Client, ctx context.Context, param Param) (*T, error) {
 	}
 
 	err = c.JSONResponse(resp, r)
-	c.logger.Error("request to ", path, " got json resp ", r, " and json err ", err)
+	if err != nil {
+		c.logger.Error("request to ", path, " got json resp ", r, " and json err ", err)
+		return nil, err
+	}
+
+	// if check Code != http.StatusOK, will return err
+	if er, ok := any(r).(AsError); ok {
+		err = er.AsError()
+		if err != nil {
+			c.logger.Error("request to ", path, " got json resp ", r, " and got AsError err ", err)
+			return nil, err
+		}
+	}
+	c.logger.Info("request to ", path, " got json resp ", r)
 	return r, err
 }
