@@ -3,7 +3,6 @@ package yunxin
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"reflect"
@@ -61,8 +60,6 @@ func (r *RawBodyModel) SetRawBody(raw []byte) {
 
 var _ WithRawBody = new(RawBodyModel)
 
-var YunxinError = errors.New("request yunxin failed")
-
 type BasicResponse struct {
 	RawBodyModel
 	Code int    `json:"code"`
@@ -73,12 +70,19 @@ func (r *BasicResponse) IsSuccess() bool {
 	return r.Code == http.StatusOK
 }
 
+type YunxinError struct {
+	BasicResponse
+}
+
+func (y *YunxinError) Error() string {
+	return fmt.Sprintf("request yunxin failed, code:%d desc: %s", y.Code, y.Desc)
+}
+
 func (r BasicResponse) AsError() error {
 	if r.Code == http.StatusOK {
 		return nil
 	}
-
-	return fmt.Errorf("%w code %d desc %s", YunxinError, r.Code, r.Desc)
+	return &YunxinError{BasicResponse: r}
 }
 
 func Request[T any](c *Client, ctx context.Context, param Param) (*T, error) {
