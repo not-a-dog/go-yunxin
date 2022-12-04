@@ -103,7 +103,7 @@ func Request[T any](c *Client, ctx context.Context, param Param) (*T, error) {
 		err = er.AsError()
 		if err != nil {
 			c.logger.Error("request to ", path, " got json resp ", r, " and got AsError err ", err)
-			return nil, err
+			return r, err
 		}
 	}
 	c.logger.Info("request to ", path, " got json resp ", r)
