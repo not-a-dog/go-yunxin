@@ -79,10 +79,19 @@ func (r *BasicResponse) AsError() error {
 func Request[T any](client *Client, ctx context.Context, param Param) (*T, error) {
 	var r = new(T)
 	path := param.GetPath()
+	if client.debug {
+		client.logger.Info("request to ", path, " with param ", param)
+	}
 	resp, err := client.PostForm(ctx, path, param)
 	if err != nil {
+		if client.debug {
+			client.logger.Error("request to ", path, " got err ", err)
+		}
 		return nil, err
 	}
 	err = client.JSONResponse(resp, r)
+	if client.debug {
+		client.logger.Error("request to ", path, " got json resp ", resp, " and err ", err)
+	}
 	return r, err
 }
