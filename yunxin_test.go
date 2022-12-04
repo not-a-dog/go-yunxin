@@ -1,7 +1,6 @@
 package yunxin
 
 import (
-	"errors"
 	"net/url"
 	"testing"
 )
@@ -37,7 +36,7 @@ func TestBasicResponse(t *testing.T) {
 	}
 
 	err := r.AsError()
-	if !errors.Is(err, YunxinError) {
+	if _, ok := err.(*YunxinError); !ok {
 		t.Error(err)
 	}
 }
@@ -49,7 +48,7 @@ type unkonwnResponse struct {
 func TestUnkonwnResponse(t *testing.T) {
 	var r unkonwnResponse
 	err := r.AsError()
-	if !errors.Is(err, YunxinError) {
+	if _, ok := err.(*YunxinError); !ok {
 		t.Error(err)
 	}
 }
