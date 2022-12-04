@@ -108,6 +108,14 @@ func (c *Client) GetUserInfos(ctx context.Context, param *GetUserInfosParam) (*G
 	return Request[GetUserInfosResponse](c, ctx, param)
 }
 
+func (MsgDelMsgParam) GetPath() string {
+	return PathMsgDelMsg
+}
+
+func (c *Client) MsgDelMsg(ctx context.Context, param *MsgDelMsgParam) (*MsgDelMsgResponse, error) {
+	return Request[MsgDelMsgResponse](c, ctx, param)
+}
+
 func (UserBlockParam) GetPath() string {
 	return PathUserBlock
 }
