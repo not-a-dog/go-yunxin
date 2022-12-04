@@ -91,7 +91,7 @@ func Request[T any](client *Client, ctx context.Context, param Param) (*T, error
 	}
 	err = client.JSONResponse(resp, r)
 	if client.debug {
-		client.logger.Error("request to ", path, " got json resp ", resp, " and err ", err)
+		client.logger.Error("request to ", path, " got json resp ", r, " and err ", err)
 	}
 	return r, err
 }
