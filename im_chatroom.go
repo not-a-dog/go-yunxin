@@ -237,3 +237,12 @@ type ChatRoomRecallParam struct {
 type ChatRoomRecallResponse struct {
 	BasicResponse
 }
+
+type ChatRoomUpdateInOutNotificationParam struct {
+	RoomID int64 `schema:"roomid,required"`
+	Close  bool  `schema:"close,required"`
+}
+
+type ChatRoomUpdateInOutNotificationResponse struct {
+	BasicResponse
+}

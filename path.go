@@ -22,12 +22,13 @@ const (
 	PathMsgSendMsg = `/msg/sendMsg.action`
 	PathMsgDelMsg  = `/msg/delMsg.action`
 
-	PathChatRoomCreate        = `/chatroom/create.action`
-	PathChatroomGet           = `/chatroom/get.action`
-	PathChatroomGetBatch      = `/chatroom/getBatch.action`
-	PathChatRoomRequestAddr   = `/chatroom/requestAddr.action`
-	PathChatRoomSendMsg       = `/chatroom/sendMsg.action`
-	PathChatRoomMembersByPage = `/chatroom/membersByPage.action`
-	PathChatRoomSetMemberRole = `/chatroom/setMemberRole.action`
-	PathChatRoomRecall        = `/chatroom/recall.action`
+	PathChatRoomCreate                  = `/chatroom/create.action`
+	PathChatroomGet                     = `/chatroom/get.action`
+	PathChatroomGetBatch                = `/chatroom/getBatch.action`
+	PathChatRoomRequestAddr             = `/chatroom/requestAddr.action`
+	PathChatRoomSendMsg                 = `/chatroom/sendMsg.action`
+	PathChatRoomMembersByPage           = `/chatroom/membersByPage.action`
+	PathChatRoomSetMemberRole           = `/chatroom/setMemberRole.action`
+	PathChatRoomRecall                  = `/chatroom/recall.action`
+	PathChatRoomUpdateInOutNotification = `/chatroom/updateInOutNotification.action`
 )

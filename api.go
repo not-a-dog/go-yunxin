@@ -52,6 +52,14 @@ func (c *Client) ChatRoomSetMemberRole(ctx context.Context, param *ChatRoomSetMe
 	return Request[ChatRoomSetMemberRoleResponse](c, ctx, param)
 }
 
+func (ChatRoomUpdateInOutNotificationParam) GetPath() string {
+	return PathChatRoomUpdateInOutNotification
+}
+
+func (c *Client) ChatRoomUpdateInOutNotification(ctx context.Context, param *ChatRoomUpdateInOutNotificationParam) (*ChatRoomUpdateInOutNotificationResponse, error) {
+	return Request[ChatRoomUpdateInOutNotificationResponse](c, ctx, param)
+}
+
 func (ChatroomGetParam) GetPath() string {
 	return PathChatroomGet
 }
